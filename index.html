@@ -1,567 +1,409 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Rider - Catálogo Global</title>
-    <style>
-        /* ==========================================
-           🎨 PALETA DE COLORES NEÓN (CLOUD RIDER)
-           ========================================== */
-        :root {
-            --cyan-neon: #00d4ff;   /* Cian brillante del logo */
-            --pink-neon: #ff1493;   /* Rosa eléctrico del logo */
-            --bg-dark: #080810;     /* Fondo ultra oscuro azulado */
-            --card-bg: #14141f;     /* Gris azulado para tarjetas */
-            --card-back-bg: #0e0e18;/* Reverso de tarjetas */
-            --text-main: #eaeaea;   /* Texto principal */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Rider &mdash; Cat&aacute;logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{\r
+  --cyan:#00d4ff;--pink:#ff1493;--dark-cyan:#00a8cc;\r
+  --bg:#080810;--s1:#0e0e18;--s2:#14141f;--s3:#1c1c2a;\r
+  --txt:#eaeaea;--muted:#777;--border:#1e1e2e;\r
+  --green:#1db954;--amber:#f59e0b;\r
+  --fh:'Bebas Neue',sans-serif;--fb:'Barlow',sans-serif;\r
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--fb);min-height:100vh;overflow-x:hidden}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+/* ── NAV ── */
+#nav{\r
+  position:sticky;top:0;z-index:300;min-height:58px;\r
+  background:rgba(8,8,16,.97);backdrop-filter:blur(12px);\r
+  border-bottom:1px solid rgba(0,212,255,.12);\r
+  display:flex;align-items:stretch;padding:0 18px;gap:0;\r
+}
+#logo-wrap{display:flex;align-items:center;gap:10px;margin-right:20px;flex-shrink:0;text-decoration:none}
+#hamburger{display:none}
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding-bottom: 50px;
-        }
+/* 🐺 Estilos originales del logo */
+#logo-img{width:38px;height:38px;object-fit:contain}
+#logo-fallback{\r
+  font-family:var(--fh);font-size:22px;letter-spacing:1px;\r
+  color:var(--cyan);font-weight:bold;margin-right:2px;display:none;\r
+}
+#logo-text{font-family:var(--fh);font-size:22px;letter-spacing:2px;\r
+  background:linear-gradient(135deg,var(--cyan),var(--pink));\r
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;\r
+}
+#nav-menu{display:flex;flex-direction:column;align-items:stretch;flex:1;gap:0}\r
+.nav-row{display:flex;align-items:center;gap:1px;overflow:visible;scrollbar-width:none;flex-wrap:wrap}\r
+.nav-row::-webkit-scrollbar{display:none}\r
+.nav-row-1{border-bottom:1px solid rgba(255,255,255,.08)}\r
+.nav-row-2{padding-top:2px;flex-wrap:wrap;gap:4px}\r
+#active-filters{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-left:6px}\r
+.af-chip{\r
+  display:inline-flex;align-items:center;gap:4px;\r
+  padding:2px 8px 2px 10px;border-radius:20px;\r
+  background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.4);\r
+  color:var(--cyan);font-size:11px;font-family:var(--fh);letter-spacing:.5px;\r
+  cursor:pointer;transition:background .15s;\r
+}\r
+.af-chip:hover{background:rgba(0,212,255,.28)}\r
+.af-chip .af-x{font-size:13px;opacity:.7;line-height:1}\r
+.af-clear{\r
+  display:inline-flex;align-items:center;gap:4px;\r
+  padding:2px 10px;border-radius:20px;\r
+  background:rgba(255,60,100,.15);border:1px solid rgba(255,60,100,.4);\r
+  color:#ff6b8a;font-size:11px;font-family:var(--fh);letter-spacing:.5px;\r
+  cursor:pointer;transition:background .15s;\r
+}\r
+.af-clear:hover{background:rgba(255,60,100,.3)}\r
+#nav-menu::-webkit-scrollbar{display:none}\r
+.nm{font-family:var(--fb);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;\r
+  color:#666;padding:6px 11px;border-radius:5px;border:none;background:transparent;\r
+  cursor:pointer;white-space:nowrap;transition:all .15s;}\r
+.nm:hover{color:#fff;background:rgba(255,255,255,.06)}\r
+.nm.on{color:var(--cyan)}\r
+.nm-drop{position:relative}\r
+.nm-drop:hover .dmenu{display:block}\r
+.dmenu.open{display:block !important}\r
+.dmenu{display:none;position:absolute;top:calc(100% + 2px);left:0;min-width:160px;\r
+  background:#0a0a14;border:1px solid rgba(0,212,255,.15);border-radius:8px;\r
+  padding:5px 0;z-index:400;box-shadow:0 10px 30px rgba(0,0,0,.8);}\r
+.dmenu.scrollable{max-height:280px;overflow-y:auto}\r
+.dmenu a{display:block;padding:7px 14px;font-size:11px;font-weight:600;letter-spacing:.6px;\r
+  text-transform:uppercase;color:#888;text-decoration:none;transition:all .12s;}\r
+.dmenu a:hover{color:var(--cyan);background:rgba(0,212,255,.06);padding-left:18px}\r
+.dmenu a.on{color:var(--cyan)}\r
+#nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}\r
+#srch{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);\r
+  border-radius:18px;color:var(--txt);padding:0 14px;height:32px;font-size:12.5px;\r
+  font-family:var(--fb);outline:none;transition:all .2s;width:160px;}\r
+#srch:focus{border-color:var(--cyan);width:200px;background:rgba(0,212,255,.04)}\r
+#srch::placeholder{color:#333}\r
+#cart-btn{\r
+  position:relative;background:linear-gradient(135deg,var(--cyan),var(--pink));\r
+  border:none;border-radius:8px;color:#fff;padding:6px 14px;font-size:12px;\r
+  font-weight:700;cursor:pointer;font-family:var(--fb);letter-spacing:.5px;\r
+  white-space:nowrap;transition:opacity .15s;\r
+}\r
+#cart-btn:hover{opacity:.85}\r
+#cart-count{\r
+  position:absolute;top:-6px;right:-6px;background:var(--pink);color:#fff;\r
+  border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;\r
+  display:none;align-items:center;justify-content:center;\r
+}\r
+#cart-count.show{display:flex}\r
 
-        header {
-            background-color: #000000;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--cyan-neon); /* Línea cian de separación */
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
-        }
+/* ── STATUS BAR ── */
+#sbar{padding:7px 18px;display:flex;justify-content:space-between;align-items:center;\r
+  gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);}\r
+.sc{font-size:11px;color:#444}.sc b{color:var(--txt);font-weight:600}\r
+.sc.cy b{color:var(--cyan)}.sc.pk b{color:var(--pink)}.sc.gn b{color:var(--green)}\r
+#srt{background:rgba(255,255,255,.04);border:1px solid var(--border);color:#777;\r
+  border-radius:6px;padding:4px 9px;font-size:11.5px;cursor:pointer;outline:none;font-family:var(--fb);}\r
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
+/* ── GRID ── */
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));\r
+  gap:12px;padding:14px 18px 18px;}\r
 
-        /* Contenedor del Logo con el Lobo */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* ── CARD ── */
+.card{border-radius:9px;overflow:hidden;cursor:pointer;position:relative;\r
+  background:var(--s1);border:1px solid var(--border);\r
+  transition:transform .2s ease,box-shadow .2s,border-color .2s;\r
+  contain:layout style;will-change:transform;}\r
+.card:hover{transform:translateY(-5px) scale(1.02);\r
+  box-shadow:0 12px 36px rgba(0,212,255,.15),0 0 0 1px var(--cyan);border-color:var(--cyan);z-index:2;}\r
+.poster{aspect-ratio:2/3;overflow:hidden;position:relative;background:var(--s2);}\r
+.poster img{width:100%;height:100%;object-fit:cover;display:block;\r
+  opacity:0;transition:opacity .3s ease;will-change:opacity;image-rendering:auto;}\r
+.poster img.ok{opacity:1}\r
+.poster-ph{position:absolute;inset:0;display:flex;flex-direction:column;\r
+  align-items:center;justify-content:center;gap:8px;color:#1a1a2a;padding:10px;text-align:center;}\r
+.poster-ph svg{width:32px;height:32px;flex-shrink:0;opacity:.3}\r
+.poster-ph span{font-size:9.5px;color:#222;line-height:1.3;word-break:break-word}\r
+.card-badge{position:absolute;top:6px;left:6px;z-index:3;\r
+  font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:8px;letter-spacing:.3px;}\r
+.cat-badge{position:absolute;top:6px;right:6px;z-index:3;\r
+  font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:6px;letter-spacing:.4px;\r
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:#aaa;}\r
+.bv{background:rgba(29,185,84,.9);color:#fff}\r
+.bf{background:rgba(255,20,147,.9);color:#fff}\r
+.bp{background:rgba(245,158,11,.9);color:#fff}\r
+.card-ov{position:absolute;inset:0;\r
+  background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 55%,transparent 100%);\r
+  opacity:0;transition:opacity .18s;display:flex;flex-direction:column;\r
+  justify-content:flex-end;padding:10px 8px 8px;pointer-events:none;}\r
+.card:hover .card-ov{opacity:1}\r
+.ov-t{font-size:11.5px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:2px}\r
+.ov-m{font-size:10px;color:#aaa}\r
+.card-info{padding:7px 8px 8px}\r
+.card-title{font-size:11.5px;font-weight:500;color:var(--txt);line-height:1.35;\r
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:2px;}\r
+.card-year{font-size:10px;color:var(--muted);margin-bottom:5px}\r
+.card-genres{font-size:9.5px;color:#383848;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\r
+.card-acts{display:flex;gap:3px}\r
+.ca{flex:1;border:1px solid var(--border);background:transparent;color:#444;\r
+  font-size:12px;padding:4px;border-radius:5px;cursor:pointer;\r
+  display:flex;align-items:center;justify-content:center;transition:all .14s;}\r
+.ca:hover{border-color:#555;color:#ccc}\r
+.ca.av{background:rgba(29,185,84,.12);border-color:var(--green);color:var(--green)}\r
+.ca.af{background:rgba(255,20,147,.12);border-color:var(--pink);color:var(--pink)}\r
+.ca.ap{background:rgba(245,158,11,.12);border-color:var(--amber);color:var(--amber)}\r
+.ca.ac{background:rgba(0,212,255,.12);border-color:var(--cyan);color:var(--cyan)}\r
 
-        /* Espacio para la imagen real de tu logo en GitHub */
-        .logo-img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-        }
+/* ── PAGER ── */
+#pager{display:flex;justify-content:center;gap:5px;padding:10px 18px 32px;flex-wrap:wrap}\r
+.pg{background:var(--s2);border:1px solid var(--border);color:#666;\r
+  border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;\r
+  transition:all .14s;font-family:var(--fb);}\r
+.pg:hover{border-color:#555;color:#fff}\r
+.pg.on{background:var(--cyan);border-color:var(--cyan);color:#000;font-weight:700}\r
+.pg:disabled{opacity:.25;cursor:not-allowed}\r
+.pg-dots{color:#333;padding:5px 3px;font-size:13px}\r
 
-        .logo-text {
-            font-size: 26px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* ── DETAIL ── */
+#detail{position:fixed;inset:0;z-index:600;overflow-y:auto;background:var(--bg);display:none;}\r
+#detail.open{display:block;animation:fadeIn .18s ease}\r
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}\r
+#det-nav{position:sticky;top:0;z-index:10;padding:12px 20px;\r
+  background:linear-gradient(180deg,rgba(8,8,16,.98) 0%,transparent 100%);\r
+  display:flex;align-items:center;gap:12px;}\r
+#det-back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);\r
+  color:#fff;border-radius:7px;padding:7px 14px;font-size:12px;\r
+  cursor:pointer;font-family:var(--fb);display:flex;align-items:center;gap:5px;transition:all .15s;}\r
+#det-back:hover{background:rgba(255,255,255,.14)}\r
+#det-add-cart{background:linear-gradient(135deg,var(--cyan),var(--pink));\r
+  border:none;color:#fff;border-radius:7px;padding:7px 14px;font-size:12px;\r
+  font-weight:700;cursor:pointer;font-family:var(--fb);transition:opacity .15s;margin-left:auto;}\r
+#det-add-cart:hover{opacity:.85}\r
+#det-add-cart.added{background:#1a3a1a;border:1px solid var(--green);color:var(--green)}\r
+#det-tit-nav{font-family:var(--fh);font-size:16px;color:#fff;letter-spacing:1px;opacity:.6;\r
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:300px;}\r
+#det-backdrop{position:fixed;top:0;left:0;right:0;height:65vh;\r
+  background-size:cover;background-position:center 20%;\r
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 100%);\r
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 100%);\r
+  pointer-events:none;z-index:0;}\r
+#det-body{position:relative;z-index:1;display:flex;gap:26px;\r
+  padding:16px 22px 36px;flex-wrap:wrap;margin-top:-30px;}\r
+#det-poster{width:185px;flex-shrink:0;border-radius:10px;overflow:hidden;\r
+  box-shadow:0 16px 48px rgba(0,0,0,.85);align-self:flex-start;margin-top:55px;}\r
+#det-poster img{width:100%;display:block}\r
+#det-poster-ph{width:100%;aspect-ratio:2/3;background:var(--s2);\r
+  display:flex;align-items:center;justify-content:center;color:#1a1a2a;}\r
+#det-info{flex:1;min-width:240px;padding-top:110px}\r
+#det-name{font-family:var(--fh);font-size:40px;\r
+  background:linear-gradient(135deg,#fff 60%,var(--cyan));\r
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;\r
+  letter-spacing:2px;line-height:1;margin-bottom:5px;text-shadow:none;}\r
+#det-tagline{font-size:12.5px;color:#555;font-style:italic;margin-bottom:14px}\r
+#det-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;align-items:center}\r
+.chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);\r
+  border-radius:14px;padding:3px 11px;font-size:11.5px;color:#bbb;}\r
+.chip.rat{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:var(--amber)}\r
+.chip.tp{background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.2);color:var(--cyan)}\r
+#det-overview{font-size:13px;color:#aaa;line-height:1.75;margin-bottom:16px;max-width:560px}\r
+#det-genres{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}\r
+.dg{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);\r
+  color:var(--cyan);border-radius:14px;padding:3px 11px;font-size:11px;font-weight:600;}\r
+#det-acts{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}\r
+.da{border:1px solid var(--border);background:rgba(255,255,255,.03);color:#777;\r
+  border-radius:7px;padding:7px 15px;font-size:12px;cursor:pointer;font-weight:600;\r
+  transition:all .16s;font-family:var(--fb);display:flex;align-items:center;gap:5px;}\r
+.da:hover{border-color:#666;color:#fff;background:rgba(255,255,255,.07)}\r
+.da.av{background:rgba(29,185,84,.1);border-color:var(--green);color:var(--green)}\r
+.da.af{background:rgba(255,20,147,.1);border-color:var(--pink);color:var(--pink)}\r
+.da.ap{background:rgba(245,158,11,.1);border-color:var(--amber);color:var(--amber)}\r
+#det-trailer{margin-top:6px}\r
+#det-trailer iframe{width:100%;max-width:520px;aspect-ratio:16/9;border-radius:9px;border:none;display:block;}\r
+#det-not-found{font-size:13px;color:#444;padding:8px 0;line-height:1.6}\r
+#det-cast-section{padding:0 22px 48px;position:relative;z-index:1}\r
+#det-cast-section h3{font-family:var(--fh);font-size:20px;letter-spacing:1px;\r
+  color:var(--cyan);margin-bottom:12px;}\r
+#det-cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:9px}\r
+.cc{text-align:center}\r
+.cc-img{width:100%;aspect-ratio:2/3;border-radius:6px;object-fit:cover;\r
+  background:var(--s2);display:block;margin-bottom:4px;}\r
+.cc-ph{width:100%;aspect-ratio:2/3;border-radius:6px;background:var(--s2);\r
+  display:flex;align-items:center;justify-content:center;color:#1a1a2a;margin-bottom:4px;}\r
+.cc-name{font-size:10px;color:#ccc;line-height:1.2}\r
+.cc-char{font-size:9.5px;color:#444;margin-top:2px}\r
+.spin-wrap{display:flex;align-items:center;gap:9px;color:#444;font-size:12.5px;padding:18px 0}\r
+.spin{width:17px;height:17px;border:2px solid #1a1a2a;border-top-color:var(--cyan);\r
+  border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}\r
+@keyframes sp{to{transform:rotate(360deg)}}\r
 
-        .catalog-tabs {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 5px 0;
-        }
+/* ── CART PANEL ── */
+#cart-panel{\r
+  position:fixed;top:0;right:-400px;width:360px;max-width:100vw;height:100vh;\r
+  background:#0a0a16;border-left:1px solid rgba(0,212,255,.15);\r
+  z-index:700;transition:right .28s cubic-bezier(.25,.46,.45,.94);\r
+  display:flex;flex-direction:column;\r
+}\r
+#cart-panel.open{right:0}\r
+#cart-head{padding:16px 18px;border-bottom:1px solid var(--border);\r
+  display:flex;align-items:center;justify-content:space-between;}\r
+#cart-head h2{font-family:var(--fh);font-size:22px;letter-spacing:1px;\r
+  background:linear-gradient(135deg,var(--cyan),var(--pink));\r
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}\r
+#cart-close{background:transparent;border:1px solid var(--border);color:#888;\r
+  border-radius:6px;padding:6px 10px;cursor:pointer;font-size:16px;}\r
+#cart-close:hover{border-color:#555;color:#fff}\r
+#cart-items{flex:1;overflow-y:auto;padding:12px 18px}\r
+.cart-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center}\r
+.cart-item-img{width:40px;height:60px;border-radius:5px;object-fit:cover;background:var(--s2);flex-shrink:0}\r
+.cart-item-info{flex:1;min-width:0}\r
+.cart-item-title{font-size:12px;font-weight:500;color:var(--txt);\r
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-bottom:2px}\r
+.cart-item-cat{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}\r
+.cart-item-del{background:transparent;border:none;color:#444;cursor:pointer;font-size:15px;padding:4px;\r
+  flex-shrink:0;transition:color .14s;}\r
+.cart-item-del:hover{color:var(--pink)}\r
+#cart-empty{text-align:center;padding:40px 20px;color:#333;font-size:13px}\r
+#cart-foot{padding:14px 18px;border-top:1px solid var(--border)}\r
+#cart-count-label{font-size:12px;color:#555;margin-bottom:10px}\r
+#cart-count-label b{color:var(--txt)}\r
+#cart-send{width:100%;background:linear-gradient(135deg,#25D366,#128C7E);\r
+  border:none;color:#fff;border-radius:8px;padding:12px;font-size:14px;font-weight:700;\r
+  cursor:pointer;font-family:var(--fb);letter-spacing:.5px;transition:opacity .15s;\r
+  display:flex;align-items:center;justify-content:center;gap:8px;}\r
+#cart-send:hover{opacity:.88}\r
+#cart-send:disabled{opacity:.3;cursor:not-allowed}\r
+#cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:699;display:none}\r
+#cart-overlay.show{display:block}\r
 
-        .catalog-tabs::-webkit-scrollbar { height: 4px; }
-        .catalog-tabs::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+/* ── MISC ── */
+#empty{text-align:center;padding:70px 20px;color:#252535;grid-column:1/-1}\r
+#empty p{font-size:13px;margin-top:8px}\r
+#bktop{position:fixed;bottom:20px;right:20px;\r
+  background:linear-gradient(135deg,var(--cyan),var(--pink));\r
+  color:#000;border:none;border-radius:50%;width:38px;height:38px;font-size:17px;\r
+  cursor:pointer;display:none;align-items:center;justify-content:center;z-index:200;\r
+  box-shadow:0 4px 14px rgba(0,212,255,.3);font-weight:700;}\r
+#bktop.show{display:flex}\r
+#prog-bar{position:fixed;bottom:0;left:0;right:0;height:2px;z-index:500;pointer-events:none}\r
+#prog-fill{height:100%;width:0%;transition:width .4s;\r
+  background:linear-gradient(90deg,var(--cyan),var(--pink));\r
+  box-shadow:0 0 8px var(--cyan);}\r
 
-        .catalog-tabs button {
-            background-color: #1a1a26;
-            border: 1px solid #33334d;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .catalog-tabs button:hover, .catalog-tabs button.active {
-            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
-            border-color: transparent;
-            color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .section-title {
-            font-size: 22px;
-            border-left: 4px solid var(--pink-neon); /* Detalle rosa */
-            padding-left: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #141424;
-            border: 1px solid #33334d;
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-
-        .search-box input {
-            background: none;
-            border: none;
-            color: white;
-            outline: none;
-            padding: 3px;
-            font-size: 14px;
-            width: 220px;
-        }
-
-        /* ==========================================
-           🎴 GRID Y EFECTO DE GIRO (FLIP CARDS)
-           ========================================== */
-        .series-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
-        }
-
-        .card-container {
-            background-color: transparent;
-            height: 380px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-
-        .card-container:hover .card-inner,
-        .card-container.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        /* Cara de adelante */
-        .card-front {
-            background-color: var(--card-bg);
-            color: white;
-        }
-
-        .thumbnail-container {
-            position: relative;
-            width: 100%;
-            height: 290px;
-            background-color: #1f1f33;
-        }
-
-        .thumbnail-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .badge-imdb {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #f5c518;
-            color: #000000;
-            padding: 3px 6px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 3px;
-            z-index: 2;
-        }
-
-        .badge-info {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: var(--cyan-neon); /* Texto del badge en cian */
-            padding: 3px 6px;
-            font-size: 11px;
-            font-weight: 600;
-            border-radius: 3px;
-            border: 1px solid var(--cyan-neon);
-            z-index: 2;
-        }
-
-        .series-info {
-            padding: 12px;
-            background-color: var(--card-bg);
-            height: 90px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .series-title {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 5px;
-            text-align: left;
-        }
-
-        .series-meta {
-            font-size: 12px;
-            color: #8fa0b3;
-            text-align: left;
-        }
-
-        /* Cara de atrás */
-        .card-back {
-            background-color: var(--card-back-bg);
-            color: #ffffff;
-            transform: rotateY(180deg);
-            padding: 20px;
-            border: 2px solid var(--pink-neon); /* Resplandor rosa al girar */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            text-align: left;
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
-        }
-
-        .back-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: var(--cyan-neon); /* Título trasero en cian */
-            margin-bottom: 8px;
-            border-bottom: 1px solid #22223b;
-            padding-bottom: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .back-synopsis {
-            font-size: 13px;
-            line-height: 1.5;
-            color: #cccccc;
-            overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 5px;
-        }
-
-        .back-synopsis::-webkit-scrollbar { width: 4px; }
-        .back-synopsis::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
-        .back-footer {
-            font-size: 11px;
-            color: #6272a4;
-            margin-top: 10px;
-            padding-top: 5px;
-            border-top: 1px solid #22223b;
-        }
-
-        .status-message {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            color: #6272a4;
-            font-size: 16px;
-        }
-
-        .btn-retry-local {
-            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            display: inline-block;
-        }
-
-        #local-file-picker { display: none; }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: #040408;
-            margin-top: 50px;
-            border-top: 1px solid #1a1a26;
-            color: #44475a;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; }
-            .catalog-tabs { width: 100%; justify-content: flex-start; }
-            .section-header { flex-direction: column; align-items: flex-start; }
-            .search-box { width: 100%; }
-            .search-box input { width: 100%; }
-            .series-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-            .card-container { height: 320px; }
-            .thumbnail-container { height: 230px; }
-        }
-    </style>
+/* ── SEASONS TABLE ── */
+#det-seasons{margin-bottom:18px}\r
+.seasons-title{font-family:var(--fh);font-size:14px;letter-spacing:1px;color:#555;\r
+  margin-bottom:8px;font-weight:400;}\r
+.seasons-grid{display:flex;flex-wrap:wrap;gap:6px}\r
+.season-chip{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);\r
+  border-radius:8px;padding:6px 12px;font-size:11.5px;color:#aaa;cursor:pointer;\r
+  transition:all .15s;font-family:var(--fb);display:flex;align-items:center;gap:5px;}\r
+.season-chip:hover{border-colorrgba(0,212,255,.4);color:#fff}\r
+.season-chip.on{background:rgba(0,212,255,.15);border-color:var(--cyan);color:var(--cyan);font-weight:600}\r
+.episodes-list{margin-top:10px;display:none;background:#05050b;border:1px solid var(--border);\r
+  border-radius:8px;max-height:240px;overflow-y:auto;padding:4px 0;}\r
+.episodes-list.open{display:block}\r
+.ep-row{padding:8px 14px;font-size:12px;color:#888;border-bottom:1px solid rgba(255,255,255,.03);\r
+  display:flex;justify-content:between;align-items:center;}\r
+.ep-row:last-child{border-bottom:none}\r
+.ep-num{color:var(--cyan);font-weight:600;margin-right:10px;font-family:var(--fh);font-size:13px;letter-spacing:.5px}\r
+.ep-title{color:#ccc;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}\r
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="navbar">
-            <div class="logo-container">
-                <img src="logo.png" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
-                <div class="logo-text">Cloud Rider</div>
-            </div>
-            <nav>
-                <div class="catalog-tabs" id="catalog-tabs">
-                    <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
-                    <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
-                    <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
-                    <button onclick="cambiarCatalogo('novelas.csv')">Novelas</button>
-                    <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
-                    <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
-                    <button onclick="cambiarCatalogo('animados.csv')">Animados</button>
-                </div>
-            </nav>
+  <nav id="nav">
+    <a href="#" id="logo-wrap" onclick="resetAllFilters(event)">
+      <img src="logo.jpg" id="logo-img" alt="Logo" onerror="this.onerror=null; this.src='logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('logo-fallback').style.display='inline-block';}">
+      <div id="logo-fallback">CR</div>
+      <span id="logo-text">CLOUD RIDER</span>
+    </a>
+    <button id="hamburger" onclick="toggleMobileMenu()">
+      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+    <div id="nav-menu">
+      <div class="nav-row nav-row-1" id="nav-cats"></div>
+      <div class="nav-row nav-row-2">
+        <div class="nm-drop" id="genre-drop-wrap">
+          <button class="nm" id="btn-genres-drop">Géneros ▾</button>
+          <div class="dmenu scrollable" id="drop-genres"></div>
         </div>
-    </header>
-
-    <main class="container">
-        <div class="section-header">
-            <h2 class="section-title" id="catalog-title">Cargando...</h2>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Buscar por título...">
-            </div>
+        <div class="nm-drop" id="year-drop-wrap">
+          <button class="nm" id="btn-years-drop">Año ▾</button>
+          <div class="dmenu scrollable" id="drop-years"></div>
         </div>
+        <div id="active-filters"></div>
+      </div>
+    </div>
+    <div id="nav-right">
+      <input type="text" id="srch" placeholder="Buscar...">
+      <button id="cart-btn" onclick="toggleCart()">
+        Pedir <span id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
 
-        <div class="series-grid" id="grid-container">
-            <div class="status-message">Iniciando...</div>
-        </div>
-    </main>
+  <div id="sbar">
+    <div class="sc cy" id="stat-total">Títulos: <b>0</b></div>
+    <div class="sc pk" id="stat-filtered" style="display:none">Encontrados: <b>0</b></div>
+    <select id="srt" onchange="handleSortChange()">
+      <option value="abc">A - Z</option>
+      <option value="rat">Puntuación</option>
+      <option value="new">Más recientes</option>
+      <option value="old">Más antiguos</option>
+    </select>
+  </div>
 
-    <input type="file" id="local-file-picker" accept=".csv">
+  <main id="grid"></main>
 
-    <footer>
-        <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
-    </footer>
+  <div id="pager"></div>
 
-    <script>
-        let datosActuales = [];
-        let archivoActual = 'series.csv';
+  <div id="detail">
+    <div id="det-backdrop"></div>
+    <div id="det-nav">
+      <button id="det-back" onclick="closeDetail()">&larr; Volver</button>
+      <div id="det-tit-nav"></div>
+      <button id="det-add-cart" onclick="handleDetailCartClick()">Añadir al pedido</button>
+    </div>
+    <div id="det-body">
+      <div id="det-poster"></div>
+      <div id="det-info">
+        <h2 id="det-name"></h2>
+        <div id="det-tagline"></div>
+        <div id="det-chips"></div>
+        <div id="det-overview"></div>
+        <div id="det-genres"></div>
+        <div id="det-seasons"></div>
+        <div id="det-acts"></div>
+        <div id="det-trailer"></div>
+      </div>
+    </div>
+    <div id="det-cast-section" style="display:none">
+      <h3>Reparto Principal</h3>
+      <div id="det-cast"></div>
+    </div>
+  </div>
 
-        document.addEventListener("DOMContentLoaded", () => {
-            cambiarCatalogo('series.csv');
-            document.getElementById('search-input').addEventListener('input', filtrarContenido);
-            document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
-        });
+  <div id="cart-overlay" onclick="toggleCart()"></div>
+  <div id="cart-panel">
+    <div id="cart-head">
+      <h2>Tu Pedido</h2>
+      <button id="cart-close" onclick="toggleCart()">&times;</button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-foot">
+      <div id="cart-count-label">Items seleccionados: <b id="cart-foot-count">0</b></div>
+      <button id="cart-send" onclick="sendCartWhatsApp()">
+        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.176.001 6.163 1.237 8.411 3.488 2.248 2.25 3.481 5.237 3.48 8.413-.003 6.597-5.339 11.946-11.89 11.946-2.005-.001-3.973-.504-5.714-1.463L0 24zm6.59-4.846c1.6.95 3.197 1.451 4.794 1.451 5.37 0 9.739-4.368 9.742-9.741.002-2.605-1.01-5.053-2.85-6.895-1.84-1.842-4.29-2.853-6.896-2.854-5.37 0-9.74 4.369-9.743 9.744-.001 1.715.46 3.393 1.332 4.882l-.99 3.615 3.701-.971zM17.91 14.65c-.328-.164-1.945-.96-2.244-1.07-.3-.109-.517-.164-.734.164-.218.328-.844 1.07-1.034 1.288-.19.218-.38.245-.71.082-.328-.164-1.386-.51-2.64-1.632-.976-.87-1.635-1.947-1.826-2.275-.19-.328-.02-.505.144-.668.148-.147.328-.382.493-.574.164-.192.219-.328.328-.547.11-.219.055-.411-.027-.574-.082-.164-.734-1.77-1.006-2.43-.265-.64-.537-.552-.734-.562-.19-.01-.41-.01-.628-.01-.218 0-.573.082-.873.411-.3.328-1.147 1.122-1.147 2.733 0 1.61 1.173 3.167 1.337 3.387.164.22 2.307 3.523 5.59 4.943.78.337 1.39.54 1.864.69.784.249 1.497.214 2.061.13.629-.094 1.945-.795 2.217-1.56.273-.767.273-1.424.19-1.56-.081-.136-.3-.218-.627-.382z"/></svg>
+        Enviar por WhatsApp
+      </button>
+    </div>
+  </div>
 
-        function cambiarCatalogo(nombreArchivo) {
-            archivoActual = nombreArchivo;
-            
-            document.querySelectorAll('.catalog-tabs button').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.getAttribute('onclick').includes(nombreArchivo)) {
-                    btn.classList.add('active');
-                    document.getElementById('catalog-title').innerText = btn.innerText;
-                }
-            });
+  <button id="bktop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&uarr;</button>
+  <div id="prog-bar"><div id="prog-fill"></div></div>
 
-            const container = document.getElementById('grid-container');
-            container.innerHTML = '<div class="status-message">Buscando base de datos multimedia...</div>';
+  <script src="script.js" defer></script>
 
-            fetch(nombreArchivo)
-                .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar " + nombreArchivo);
-                    return response.text();
-                })
-                .then(texto => {
-                    procesarCSV(texto);
-                })
-                .catch(error => {
-                    container.innerHTML = `
-                        <div class="status-message" style="color: var(--pink-neon);">
-                            <p>Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</p>
-                            <label for="local-file-picker" class="btn-retry-local">O cargar "${nombreArchivo}" manualmente desde tu PC</label>
-                        </div>`;
-                    console.error(error);
-                });
-        }
-
-        function cargarArchivoLocal(evt) {
-            const archivo = evt.target.files[0];
-            if (!archivo) return;
-            const lector = new FileReader();
-            lector.onload = function(e) {
-                procesarCSV(e.target.result);
-            };
-            lector.readAsText(archivo, 'UTF-8');
-        }
-
-        function procesarCSV(texto) {
-            let lineas = [];
-            if (archivoActual === 'animados.csv' && texto.includes('\t')) {
-                let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
-                lineas = textoLimpio.split('\n');
-            } else {
-                lineas = texto.split(/\r?\n/);
-            }
-
-            if (lineas.length < 2) return;
-
-            let separador = ';';
-            if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) {
-                separador = '\t';
-            }
-
-            const cabeceras = lineas[0].replace(/"/g, '').split(separador).map(c => c.trim().toLowerCase());
-            datosActuales = [];
-
-            for (let i = 1; i < lineas.length; i++) {
-                if (!lineas[i].trim()) continue;
-                
-                let fila = lineas[i];
-                if (fila.startsWith('"') && fila.endsWith('"')) {
-                    fila = fila.substring(1, fila.length - 1);
-                }
-
-                const columnas = fila.split(separador);
-                const obj = {};
-                
-                cabeceras.forEach((cabecera, index) => {
-                    obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
-                });
-
-                const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
-                const anioFinal = obj.anio || "N/A";
-                const imagenFinal = obj.link_imagen || obj.poster_url || ""; 
-                const scoreFinal = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
-                const tempFinal = obj.temporadas || "1";
-                const capFinal = obj.capitulos || obj.episodios || "0";
-                const sinopsisFinal = obj.sinopsis || "No hay sinopsis disponible para este título.";
-                const generosFinal = obj.generos || "";
-
-                datosActuales.push({
-                    titulo: tituloFinal,
-                    anio: anioFinal,
-                    imagen: imagenFinal, 
-                    imdb: scoreFinal,
-                    temporadas: tempFinal,
-                    capitulos: capFinal,
-                    sinopsis: sinopsisFinal,
-                    generos: generosFinal
-                });
-            }
-
-            filtrarContenido();
-        }
-
-        function filtrarContenido() {
-            const busqueda = document.getElementById('search-input').value.toLowerCase();
-            const filtrados = datosActuales.filter(item => 
-                item.titulo.toLowerCase().includes(busqueda)
-            );
-            renderizarGrid(filtrados);
-        }
-
-        function renderizarGrid(lista) {
-            const container = document.getElementById('grid-container');
-            container.innerHTML = '';
-
-            if (lista.length === 0) {
-                container.innerHTML = `<div class="status-message">No se encontraron resultados en esta sección.</div>`;
-                return;
-            }
-
-            lista.forEach(item => {
-                const esJuego = archivoActual === 'juegos.csv';
-                const esPeli = archivoActual === 'peliculas.csv';
-                
-                let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
-                if (esJuego || esPeli) {
-                    infoBadge = `Año: ${item.anio.split(' ')[0]}`;
-                }
-
-                const ratingBadge = (item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0') ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : '';
-
-                const cardContainer = document.createElement('div');
-                cardContainer.className = 'card-container';
-                
-                cardContainer.addEventListener('click', () => {
-                    cardContainer.classList.toggle('flipped');
-                });
-
-                cardContainer.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="thumbnail-container">
-                                ${ratingBadge}
-                                <span class="badge-info">${infoBadge}</span>
-                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text='+encodeURIComponent(item.titulo)">
-                            </div>
-                            <div class="series-info">
-                                <div class="series-title" title="${item.titulo}">${item.titulo}</div>
-                                <div class="series-meta">${item.anio}</div>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="back-title">${item.titulo}</div>
-                            <div class="back-synopsis">${item.sinopsis}</div>
-                            <div class="back-footer">
-                                <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(cardContainer);
-            });
-        }
-    </script>
 </body>
 </html>
