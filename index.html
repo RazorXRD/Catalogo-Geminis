@@ -15,205 +15,124 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
         body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 50px; }
 
         header {
             background-color: #000000;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
             border-bottom: 2px solid var(--cyan-neon);
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0,212,255,0.2);
         }
 
         .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            gap: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+            flex-wrap: wrap; gap: 15px;
         }
 
         .logo-container { display: flex; align-items: center; gap: 12px; }
-
         .logo-img { width: 45px; height: 45px; object-fit: contain; }
-
         .logo-text {
-            font-size: 26px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 26px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
             background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .catalog-tabs {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 5px 0;
+            display: flex; list-style: none; gap: 10px;
+            overflow-x: auto; white-space: nowrap; padding: 5px 0;
         }
-
         .catalog-tabs::-webkit-scrollbar { height: 4px; }
         .catalog-tabs::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
         .catalog-tabs button {
-            background-color: #1a1a26;
-            border: 1px solid #33334d;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background-color: #1a1a26; border: 1px solid #33334d; color: #fff;
+            font-size: 14px; font-weight: 600; padding: 8px 16px;
+            border-radius: 20px; cursor: pointer; transition: all 0.3s ease;
         }
-
         .catalog-tabs button:hover, .catalog-tabs button.active {
             background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
-            border-color: transparent;
-            color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+            border-color: transparent; color: #fff;
+            box-shadow: 0 0 10px rgba(0,212,255,0.4);
+        }
+
+        /* ── INICIO badge especial ── */
+        .catalog-tabs button.inicio-btn {
+            background: linear-gradient(135deg, #1a1a26, #1a1a26);
+            border: 1px solid var(--cyan-neon);
+            color: var(--cyan-neon);
+        }
+        .catalog-tabs button.inicio-btn.active,
+        .catalog-tabs button.inicio-btn:hover {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
+            border-color: transparent; color: #fff;
         }
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
 
         /* ── FILTROS ── */
         .filters-bar {
-            background-color: #0d0d1a;
-            border: 1px solid #1e1e35;
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 22px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            align-items: flex-end;
+            background-color: #0d0d1a; border: 1px solid #1e1e35;
+            border-radius: 10px; padding: 16px 20px; margin-bottom: 18px;
+            display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
         }
-
         .filter-group { display: flex; flex-direction: column; gap: 5px; min-width: 150px; flex: 1; }
-
         .filter-group label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--cyan-neon);
-            font-weight: 600;
+            font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--cyan-neon); font-weight: 600;
         }
-
         .filter-group select {
-            background-color: #141424;
-            border: 1px solid #33334d;
-            color: #ffffff;
-            padding: 7px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
+            background-color: #141424; border: 1px solid #33334d; color: #fff;
+            padding: 7px 10px; border-radius: 6px; font-size: 13px; cursor: pointer;
+            appearance: none; -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300d4ff'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            padding-right: 28px;
-            transition: border-color 0.2s;
+            background-repeat: no-repeat; background-position: right 10px center;
+            padding-right: 28px; transition: border-color 0.2s;
         }
-
         .filter-group select:focus { outline: none; border-color: var(--cyan-neon); }
         .filter-group select option { background-color: #141424; }
 
         .filter-reset-btn {
-            background: none;
-            border: 1px solid #444;
-            color: #888;
-            padding: 7px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            align-self: flex-end;
-            white-space: nowrap;
+            background: none; border: 1px solid #444; color: #888;
+            padding: 7px 14px; border-radius: 6px; font-size: 12px;
+            cursor: pointer; transition: all 0.2s; align-self: flex-end; white-space: nowrap;
         }
-
         .filter-reset-btn:hover { border-color: var(--pink-neon); color: var(--pink-neon); }
 
         .results-count {
-            align-self: flex-end;
-            font-size: 12px;
-            color: #556;
-            white-space: nowrap;
-            padding-bottom: 2px;
+            align-self: flex-end; font-size: 12px; color: #556;
+            white-space: nowrap; padding-bottom: 2px;
         }
 
-        /* ── GENRE PILLS (top 5 quick filter) ── */
-        .genre-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
+        /* ── PILLS top 5 géneros ── */
+        .genre-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
         .genre-pill {
-            background-color: #1a1a2e;
-            border: 1px solid #2a2a45;
-            color: #aaa;
-            padding: 5px 13px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
+            background-color: #1a1a2e; border: 1px solid #2a2a45; color: #aaa;
+            padding: 5px 13px; border-radius: 20px; font-size: 12px;
+            font-weight: 500; cursor: pointer; transition: all 0.2s;
         }
-
         .genre-pill:hover { border-color: var(--cyan-neon); color: var(--cyan-neon); }
-
         .genre-pill.active {
             background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(255,20,147,0.15));
-            border-color: var(--pink-neon);
-            color: var(--pink-neon);
+            border-color: var(--pink-neon); color: var(--pink-neon);
         }
 
         /* ── SECTION HEADER ── */
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            gap: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 18px; flex-wrap: wrap; gap: 15px;
         }
-
         .section-title {
-            font-size: 22px;
-            border-left: 4px solid var(--pink-neon);
-            padding-left: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 22px; border-left: 4px solid var(--pink-neon);
+            padding-left: 10px; text-transform: uppercase; letter-spacing: 1px;
         }
-
         .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #141424;
-            border: 1px solid #33334d;
-            padding: 6px 12px;
-            border-radius: 4px;
+            display: flex; align-items: center; background-color: #141424;
+            border: 1px solid #33334d; padding: 6px 12px; border-radius: 4px;
         }
-
         .search-box input {
-            background: none;
-            border: none;
-            color: white;
-            outline: none;
-            padding: 3px;
-            font-size: 14px;
-            width: 220px;
+            background: none; border: none; color: white; outline: none;
+            padding: 3px; font-size: 14px; width: 220px;
         }
 
         /* ── CARDS ── */
@@ -222,45 +141,26 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 25px;
         }
-
         .card-container {
-            background-color: transparent;
-            height: 380px;
-            perspective: 1000px;
-            cursor: pointer;
+            background-color: transparent; height: 380px;
+            perspective: 1000px; cursor: pointer;
         }
-
         .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
+            position: relative; width: 100%; height: 100%;
+            text-align: center; transition: transform 0.6s; transform-style: preserve-3d;
         }
-
         .card-container:hover .card-inner,
-        .card-container.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
+        .card-container.flipped .card-inner { transform: rotateY(180deg); }
 
         .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: absolute; width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            border-radius: 8px; overflow: hidden;
+            display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
-
         .card-front { background-color: var(--card-bg); color: white; }
 
         .thumbnail-container { position: relative; width: 100%; height: 290px; background-color: #1f1f33; }
-
         .thumbnail-container img { width: 100%; height: 100%; object-fit: cover; }
 
         .badge-imdb {
@@ -269,75 +169,67 @@
             padding: 3px 6px; font-size: 11px; font-weight: bold;
             border-radius: 3px; z-index: 2;
         }
-
         .badge-info {
             position: absolute; top: 10px; right: 10px;
             background-color: rgba(0,0,0,0.8); color: var(--cyan-neon);
             padding: 3px 6px; font-size: 11px; font-weight: 600;
             border-radius: 3px; border: 1px solid var(--cyan-neon); z-index: 2;
         }
+        /* badge de categoría para INICIO */
+        .badge-cat {
+            position: absolute; bottom: 8px; right: 8px;
+            background: linear-gradient(135deg, rgba(0,212,255,0.85), rgba(255,20,147,0.85));
+            color: #fff; padding: 2px 7px; font-size: 10px; font-weight: 700;
+            border-radius: 3px; z-index: 2; text-transform: uppercase; letter-spacing: 0.5px;
+        }
 
         .series-info {
             padding: 12px; background-color: var(--card-bg);
             height: 90px; display: flex; flex-direction: column; justify-content: center;
         }
-
         .series-title {
-            font-size: 14px; font-weight: 600;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            margin-bottom: 5px; text-align: left;
+            font-size: 14px; font-weight: 600; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; text-align: left;
         }
-
         .series-meta { font-size: 12px; color: #8fa0b3; text-align: left; }
 
         .card-back {
             background-color: var(--card-back-bg); color: #fff;
             transform: rotateY(180deg); padding: 20px;
             border: 2px solid var(--pink-neon);
-            display: flex; flex-direction: column;
-            justify-content: flex-start; text-align: left;
+            display: flex; flex-direction: column; justify-content: flex-start; text-align: left;
             box-shadow: 0 0 15px rgba(255,20,147,0.2);
         }
-
         .back-title {
             font-size: 15px; font-weight: bold; color: var(--cyan-neon);
             margin-bottom: 8px; border-bottom: 1px solid #22223b;
-            padding-bottom: 5px; overflow: hidden;
-            text-overflow: ellipsis; white-space: nowrap;
+            padding-bottom: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-
         .back-synopsis {
             font-size: 13px; line-height: 1.5; color: #ccc;
             overflow-y: auto; flex-grow: 1; padding-right: 5px;
         }
-
         .back-synopsis::-webkit-scrollbar { width: 4px; }
         .back-synopsis::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
         .back-footer {
             font-size: 11px; color: #6272a4;
-            margin-top: 10px; padding-top: 5px;
-            border-top: 1px solid #22223b;
+            margin-top: 10px; padding-top: 5px; border-top: 1px solid #22223b;
         }
 
         .status-message {
             grid-column: 1 / -1; text-align: center;
             padding: 40px; color: #6272a4; font-size: 16px;
         }
-
         .btn-retry-local {
             background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
-            color: white; border: none; padding: 8px 16px;
-            border-radius: 4px; font-weight: bold;
-            cursor: pointer; margin-top: 15px; display: inline-block;
+            color: white; border: none; padding: 8px 16px; border-radius: 4px;
+            font-weight: bold; cursor: pointer; margin-top: 15px; display: inline-block;
         }
-
         #local-file-picker { display: none; }
 
         footer {
-            text-align: center; padding: 30px;
-            background-color: #040408; margin-top: 50px;
-            border-top: 1px solid #1a1a26;
+            text-align: center; padding: 30px; background-color: #040408;
+            margin-top: 50px; border-top: 1px solid #1a1a26;
             color: #44475a; font-size: 14px;
         }
 
@@ -357,343 +249,413 @@
 </head>
 <body>
 
-    <header>
-        <div class="navbar">
-            <div class="logo-container">
-                <img src="logotipo.jpg" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
-                <div class="logo-text">Cloud Rider</div>
-            </div>
-            <nav>
-                <div class="catalog-tabs" id="catalog-tabs">
-                    <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
-                    <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
-                    <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
-                    <button onclick="cambiarCatalogo('novelas.csv')">Novelas</button>
-                    <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
-                    <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
-                    <button onclick="cambiarCatalogo('animados.csv')">Animados</button>
-                </div>
-            </nav>
+<header>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="logotipo.jpg" alt="Logo" class="logo-img"
+                 onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
+            <div class="logo-text">Cloud Rider</div>
         </div>
-    </header>
-
-    <main class="container">
-        <div class="section-header">
-            <h2 class="section-title" id="catalog-title">Cargando...</h2>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Buscar por título...">
+        <nav>
+            <div class="catalog-tabs" id="catalog-tabs">
+                <button class="inicio-btn active" onclick="irInicio()">🏠 Inicio</button>
+                <button onclick="cambiarCatalogo('series.csv')">Series</button>
+                <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
+                <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
+                <button onclick="cambiarCatalogo('novelas.csv')">Novelas</button>
+                <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
+                <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
+                <button onclick="cambiarCatalogo('animados.csv')">Animados</button>
             </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <div class="section-header">
+        <h2 class="section-title" id="catalog-title">Inicio</h2>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Buscar por título...">
         </div>
+    </div>
 
-        <!-- FILTROS -->
-        <div class="filters-bar">
-            <div class="filter-group">
-                <label>Género</label>
-                <select id="filter-genre">
-                    <option value="">Todos los géneros</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label>Año</label>
-                <select id="filter-year">
-                    <option value="">Todos los años</option>
-                </select>
-            </div>
-            <button class="filter-reset-btn" onclick="resetFiltros()">✕ Limpiar filtros</button>
-            <div class="results-count" id="results-count"></div>
+    <!-- FILTROS — ocultos en Inicio -->
+    <div class="filters-bar" id="filters-bar">
+        <div class="filter-group">
+            <label>Género</label>
+            <select id="filter-genre">
+                <option value="">Todos los géneros</option>
+            </select>
         </div>
-
-        <!-- PILLS DE GÉNEROS POPULARES -->
-        <div class="genre-pills" id="genre-pills"></div>
-
-        <div class="series-grid" id="grid-container">
-            <div class="status-message">Iniciando...</div>
+        <div class="filter-group">
+            <label>Año</label>
+            <select id="filter-year">
+                <option value="">Todos los años</option>
+            </select>
         </div>
-    </main>
+        <button class="filter-reset-btn" onclick="resetFiltros()">✕ Limpiar filtros</button>
+        <div class="results-count" id="results-count"></div>
+    </div>
 
-    <input type="file" id="local-file-picker" accept=".csv">
+    <!-- PILLS top 5 — ocultas en Inicio -->
+    <div class="genre-pills" id="genre-pills"></div>
 
-    <footer>
-        <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
-    </footer>
+    <div class="series-grid" id="grid-container">
+        <div class="status-message">Cargando catálogo...</div>
+    </div>
+</main>
 
-    <script>
-        let datosActuales = [];
-        let archivoActual = 'series.csv';
-        let generoActivoPill = '';
+<input type="file" id="local-file-picker" accept=".csv">
 
-        document.addEventListener("DOMContentLoaded", () => {
-            cambiarCatalogo('series.csv');
-            document.getElementById('search-input').addEventListener('input', filtrarContenido);
-            document.getElementById('filter-genre').addEventListener('change', filtrarContenido);
-            document.getElementById('filter-year').addEventListener('change', filtrarContenido);
-            document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
+<footer>
+    <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────
+   CONFIGURACIÓN DE ARCHIVOS Y CATEGORÍAS
+───────────────────────────────────────────── */
+const CATALOGOS = [
+    { archivo: 'series.csv',    label: 'Series'    },
+    { archivo: 'animes.csv',    label: 'Anime'     },
+    { archivo: 'doramas.csv',   label: 'Dorama'    },
+    { archivo: 'novelas.csv',   label: 'Novelas'   },
+    { archivo: 'juegos.csv',    label: 'Juegos PC' },
+    { archivo: 'peliculas.csv', label: 'Películas' },
+    { archivo: 'animados.csv',  label: 'Animados'  },
+];
+
+// Cache de datos ya cargados { archivo: [items] }
+const cache = {};
+
+let datosActuales   = [];   // items del catálogo activo
+let archivoActual   = null; // null = Inicio
+let modoInicio      = true;
+
+/* ─────────────────────────────────────────────
+   INICIO
+───────────────────────────────────────────── */
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('search-input').addEventListener('input', filtrarContenido);
+    document.getElementById('filter-genre').addEventListener('change', filtrarContenido);
+    document.getElementById('filter-year').addEventListener('change', filtrarContenido);
+    document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
+    irInicio();
+});
+
+/* ─────────────────────────────────────────────
+   NAVEGACIÓN
+───────────────────────────────────────────── */
+function irInicio() {
+    modoInicio    = true;
+    archivoActual = null;
+
+    document.querySelectorAll('.catalog-tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelector('.inicio-btn').classList.add('active');
+    document.getElementById('catalog-title').innerText = 'Inicio';
+
+    // Ocultar filtros en inicio
+    document.getElementById('filters-bar').style.display  = 'none';
+    document.getElementById('genre-pills').style.display  = 'none';
+
+    resetFiltrosSilencioso();
+    cargarTodos();
+}
+
+function cambiarCatalogo(nombreArchivo) {
+    modoInicio    = false;
+    archivoActual = nombreArchivo;
+
+    document.querySelectorAll('.catalog-tabs button').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(nombreArchivo)) {
+            btn.classList.add('active');
+            document.getElementById('catalog-title').innerText = btn.innerText;
+        }
+    });
+
+    // Mostrar filtros
+    document.getElementById('filters-bar').style.display = '';
+    document.getElementById('genre-pills').style.display = '';
+
+    resetFiltrosSilencioso();
+
+    const container = document.getElementById('grid-container');
+    container.innerHTML = '<div class="status-message">Cargando...</div>';
+
+    obtenerDatos(nombreArchivo)
+        .then(items => {
+            datosActuales = items;
+            construirFiltros(items);
+            filtrarContenido();
+        })
+        .catch(err => {
+            container.innerHTML = `
+                <div class="status-message" style="color:var(--pink-neon);">
+                    <p>No se encontró "<strong>${nombreArchivo}</strong>" en el servidor.</p>
+                    <label for="local-file-picker" class="btn-retry-local">Cargar manualmente desde PC</label>
+                </div>`;
+            console.error(err);
         });
+}
 
-        function cambiarCatalogo(nombreArchivo) {
-            archivoActual = nombreArchivo;
-            generoActivoPill = '';
+/* ─────────────────────────────────────────────
+   CARGA DE DATOS
+───────────────────────────────────────────── */
+function obtenerDatos(archivo) {
+    if (cache[archivo]) return Promise.resolve(cache[archivo]);
+    return fetch(archivo)
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(texto => {
+            const items = parsearCSV(texto, archivo);
+            cache[archivo] = items;
+            return items;
+        });
+}
 
-            document.querySelectorAll('.catalog-tabs button').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('onclick').includes(nombreArchivo)) {
-                    btn.classList.add('active');
-                    document.getElementById('catalog-title').innerText = btn.innerText;
-                }
-            });
+function cargarTodos() {
+    const container = document.getElementById('grid-container');
+    container.innerHTML = '<div class="status-message">Cargando todo el catálogo...</div>';
+    document.getElementById('results-count').textContent = '';
 
-            // Reset filtros al cambiar sección
-            document.getElementById('search-input').value = '';
-            document.getElementById('filter-genre').value = '';
-            document.getElementById('filter-year').value = '';
+    const promesas = CATALOGOS.map(c =>
+        obtenerDatos(c.archivo)
+            .then(items => items.map(i => ({ ...i, _cat: c.label })))
+            .catch(() => [])
+    );
 
-            const container = document.getElementById('grid-container');
-            container.innerHTML = '<div class="status-message">Buscando base de datos multimedia...</div>';
+    Promise.all(promesas).then(resultados => {
+        // Mezclar aleatoriamente para que el inicio no sea solo series
+        const todos = resultados.flat().sort(() => Math.random() - 0.5);
+        datosActuales = todos;
+        renderizarGrid(todos, true);
+    });
+}
 
-            fetch(nombreArchivo)
-                .then(r => { if (!r.ok) throw new Error("No se pudo cargar " + nombreArchivo); return r.text(); })
-                .then(texto => procesarCSV(texto))
-                .catch(error => {
-                    container.innerHTML = `
-                        <div class="status-message" style="color: var(--pink-neon);">
-                            <p>Asegúrate de que el archivo "<strong>${nombreArchivo}</strong>" esté en el repositorio GitHub.</p>
-                            <label for="local-file-picker" class="btn-retry-local">O cargarlo manualmente desde tu PC</label>
-                        </div>`;
-                    console.error(error);
-                });
-        }
+function cargarArchivoLocal(evt) {
+    const archivo = evt.target.files[0];
+    if (!archivo) return;
+    const lector = new FileReader();
+    lector.onload = e => {
+        const items = parsearCSV(e.target.result, archivoActual || 'series.csv');
+        cache[archivoActual] = items;
+        datosActuales = items;
+        construirFiltros(items);
+        filtrarContenido();
+    };
+    lector.readAsText(archivo, 'UTF-8');
+}
 
-        function cargarArchivoLocal(evt) {
-            const archivo = evt.target.files[0];
-            if (!archivo) return;
-            const lector = new FileReader();
-            lector.onload = e => procesarCSV(e.target.result);
-            lector.readAsText(archivo, 'UTF-8');
-        }
+/* ─────────────────────────────────────────────
+   PARSEO CSV
+───────────────────────────────────────────── */
+function parsearCSV(texto, archivo) {
+    let lineas = [];
+    if (archivo === 'animados.csv' && texto.includes('\t')) {
+        lineas = texto.replace(/^"|";;$/g, '').split('\n');
+    } else {
+        lineas = texto.split(/\r?\n/);
+    }
 
-        function procesarCSV(texto) {
-            let lineas = [];
-            if (archivoActual === 'animados.csv' && texto.includes('\t')) {
-                let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\\s*;\\s*;\\s*"/g, '\n');
-                lineas = textoLimpio.split('\n');
-            } else {
-                lineas = texto.split(/\r?\n/);
-            }
+    if (lineas.length < 2) return [];
 
-            if (lineas.length < 2) return;
+    let sep = ';';
+    if (archivo === 'animados.csv' && lineas[0].includes('\t')) sep = '\t';
 
-            let separador = ';';
-            if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) separador = '\t';
+    const cabs = lineas[0].replace(/\uFEFF/g, '').replace(/"/g, '').split(sep).map(c => c.trim().toLowerCase());
+    const items = [];
 
-            const cabeceras = lineas[0].replace(/\uFEFF/g, '').replace(/"/g, '').split(separador).map(c => c.trim().toLowerCase());
-            datosActuales = [];
+    for (let i = 1; i < lineas.length; i++) {
+        if (!lineas[i].trim()) continue;
+        let fila = lineas[i];
+        if (fila.startsWith('"') && fila.endsWith('"')) fila = fila.slice(1, -1);
 
-            for (let i = 1; i < lineas.length; i++) {
-                if (!lineas[i].trim()) continue;
+        const cols = fila.split(sep);
+        const obj  = {};
+        cabs.forEach((c, idx) => { obj[c] = cols[idx] ? cols[idx].trim() : ''; });
 
-                let fila = lineas[i];
-                if (fila.startsWith('"') && fila.endsWith('"')) fila = fila.substring(1, fila.length - 1);
+        const titulo    = obj.titulo_encontrado || obj.titulo || obj.titulo_original || 'Sin título';
+        const anio      = obj.anio || 'N/A';
+        const imagen    = obj.link_imagen || obj.poster_url || '';
+        const score     = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || 'N/A';
+        const temps     = obj.temporadas || '1';
+        const caps      = obj.capitulos  || obj.episodios || '0';
+        const sinopsis  = obj.sinopsis   || 'Sin sinopsis disponible.';
+        const generos   = obj.generos    || '';
+        const anioNum   = anio.replace(/[^0-9]/g, '').substring(0, 4) || 'N/A';
 
-                const columnas = fila.split(separador);
-                const obj = {};
-                cabeceras.forEach((cab, idx) => { obj[cab] = columnas[idx] ? columnas[idx].trim() : ''; });
+        items.push({ titulo, anio, anioNum, imagen, imdb: score, temporadas: temps, capitulos: caps, sinopsis, generos });
+    }
+    return items;
+}
 
-                const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
-                const anioFinal   = obj.anio || "N/A";
-                const imagenFinal = obj.link_imagen || obj.poster_url || "";
-                const scoreFinal  = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
-                const tempFinal   = obj.temporadas || "1";
-                const capFinal    = obj.capitulos || obj.episodios || "0";
-                const sinopsisFinal = obj.sinopsis || "No hay sinopsis disponible.";
-                const generosFinal  = obj.generos || "";
-
-                // Normalizar año: tomar solo los primeros 4 dígitos
-                const anioNorm = anioFinal.replace(/[^0-9]/g, '').substring(0, 4) || "N/A";
-
-                datosActuales.push({
-                    titulo: tituloFinal,
-                    anio: anioFinal,
-                    anioNum: anioNorm,
-                    imagen: imagenFinal,
-                    imdb: scoreFinal,
-                    temporadas: tempFinal,
-                    capitulos: capFinal,
-                    sinopsis: sinopsisFinal,
-                    generos: generosFinal
-                });
-            }
-
-            construirFiltros();
-            filtrarContenido();
-        }
-
-        /* ── Construye los <option> de los selectores y las pills ── */
-        function construirFiltros() {
-            // Recolectar géneros únicos
-            const todosGeneros = new Set();
-            datosActuales.forEach(item => {
-                if (item.generos) {
-                    item.generos.split(',').forEach(g => {
-                        const gn = g.trim();
-                        if (gn) todosGeneros.add(gn);
-                    });
-                }
-            });
-
-            // Recolectar años únicos
-            const todosAnios = new Set();
-            datosActuales.forEach(item => {
-                if (item.anioNum && item.anioNum !== 'N/A' && item.anioNum.length === 4) {
-                    todosAnios.add(item.anioNum);
-                }
-            });
-
-            // Contar frecuencia de géneros para top 5 pills
-            const frecGeneros = {};
-            datosActuales.forEach(item => {
-                if (item.generos) {
-                    item.generos.split(',').forEach(g => {
-                        const gn = g.trim();
-                        if (gn) frecGeneros[gn] = (frecGeneros[gn] || 0) + 1;
-                    });
-                }
-            });
-
-            const top5 = Object.entries(frecGeneros)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 5)
-                .map(e => e[0]);
-
-            // Llenar select de géneros
-            const selGen = document.getElementById('filter-genre');
-            selGen.innerHTML = '<option value="">Todos los géneros</option>';
-            [...todosGeneros].sort().forEach(g => {
-                const opt = document.createElement('option');
-                opt.value = g;
-                opt.textContent = g;
-                selGen.appendChild(opt);
-            });
-
-            // Llenar select de años (descendente)
-            const selAnio = document.getElementById('filter-year');
-            selAnio.innerHTML = '<option value="">Todos los años</option>';
-            [...todosAnios].sort((a, b) => b - a).forEach(y => {
-                const opt = document.createElement('option');
-                opt.value = y;
-                opt.textContent = y;
-                selAnio.appendChild(opt);
-            });
-
-            // Renderizar pills top 5
-            const pillsContainer = document.getElementById('genre-pills');
-            pillsContainer.innerHTML = '';
-            top5.forEach(g => {
-                const pill = document.createElement('button');
-                pill.className = 'genre-pill';
-                pill.textContent = g;
-                pill.addEventListener('click', () => togglePill(g, pill));
-                pillsContainer.appendChild(pill);
+/* ─────────────────────────────────────────────
+   FILTROS — solo top 5 géneros más frecuentes
+───────────────────────────────────────────── */
+function construirFiltros(items) {
+    // Contar frecuencia
+    const freq = {};
+    items.forEach(it => {
+        if (it.generos) {
+            it.generos.split(',').forEach(g => {
+                const gn = g.trim();
+                if (gn) freq[gn] = (freq[gn] || 0) + 1;
             });
         }
+    });
 
-        function togglePill(genero, pill) {
-            const esActivo = pill.classList.contains('active');
-            // Desactivar todas las pills
-            document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+    // Top 5 únicamente
+    const top5 = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0,5).map(e => e[0]);
 
-            if (esActivo) {
-                generoActivoPill = '';
-                document.getElementById('filter-genre').value = '';
-            } else {
-                pill.classList.add('active');
-                generoActivoPill = genero;
-                document.getElementById('filter-genre').value = genero;
-            }
-            filtrarContenido();
-        }
+    // Años únicos
+    const anios = [...new Set(items.map(it => it.anioNum).filter(a => a && a.length === 4))].sort((a,b) => b-a);
 
-        function resetFiltros() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('filter-genre').value = '';
-            document.getElementById('filter-year').value = '';
-            generoActivoPill = '';
-            document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
-            filtrarContenido();
-        }
+    // Select géneros → SOLO top 5
+    const selGen = document.getElementById('filter-genre');
+    selGen.innerHTML = '<option value="">Todos los géneros</option>';
+    top5.forEach(g => {
+        const o = document.createElement('option');
+        o.value = g; o.textContent = g;
+        selGen.appendChild(o);
+    });
 
-        function filtrarContenido() {
-            const busqueda = document.getElementById('search-input').value.toLowerCase().trim();
-            const generoSel = document.getElementById('filter-genre').value.trim().toLowerCase();
-            const anioSel   = document.getElementById('filter-year').value.trim();
+    // Select años
+    const selAnio = document.getElementById('filter-year');
+    selAnio.innerHTML = '<option value="">Todos los años</option>';
+    anios.forEach(y => {
+        const o = document.createElement('option');
+        o.value = y; o.textContent = y;
+        selAnio.appendChild(o);
+    });
 
-            // Sync pill highlight with select
-            document.querySelectorAll('.genre-pill').forEach(p => {
-                p.classList.toggle('active', p.textContent.trim().toLowerCase() === generoSel);
-            });
+    // Pills top 5
+    const pillsDiv = document.getElementById('genre-pills');
+    pillsDiv.innerHTML = '';
+    top5.forEach(g => {
+        const btn = document.createElement('button');
+        btn.className   = 'genre-pill';
+        btn.textContent = g;
+        btn.addEventListener('click', () => togglePill(g, btn));
+        pillsDiv.appendChild(btn);
+    });
+}
 
-            const filtrados = datosActuales.filter(item => {
-                const matchTitulo  = !busqueda || item.titulo.toLowerCase().includes(busqueda);
-                const matchGenero  = !generoSel || item.generos.toLowerCase().split(',').map(g => g.trim()).includes(generoSel);
-                const matchAnio    = !anioSel   || item.anioNum === anioSel;
-                return matchTitulo && matchGenero && matchAnio;
-            });
+function togglePill(genero, pill) {
+    const era = pill.classList.contains('active');
+    document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+    const selGen = document.getElementById('filter-genre');
+    if (era) {
+        selGen.value = '';
+    } else {
+        pill.classList.add('active');
+        selGen.value = genero;
+    }
+    filtrarContenido();
+}
 
-            document.getElementById('results-count').textContent =
-                filtrados.length + ' resultado' + (filtrados.length !== 1 ? 's' : '');
+function resetFiltros() {
+    resetFiltrosSilencioso();
+    filtrarContenido();
+}
 
-            renderizarGrid(filtrados);
-        }
+function resetFiltrosSilencioso() {
+    document.getElementById('search-input').value  = '';
+    document.getElementById('filter-genre').value  = '';
+    document.getElementById('filter-year').value   = '';
+    document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+}
 
-        function renderizarGrid(lista) {
-            const container = document.getElementById('grid-container');
-            container.innerHTML = '';
+/* ─────────────────────────────────────────────
+   FILTRADO Y RENDERIZADO
+───────────────────────────────────────────── */
+function filtrarContenido() {
+    if (modoInicio) { renderizarGrid(datosActuales, true); return; }
 
-            if (lista.length === 0) {
-                container.innerHTML = `<div class="status-message">No se encontraron resultados con estos filtros.</div>`;
-                return;
-            }
+    const busq   = document.getElementById('search-input').value.toLowerCase().trim();
+    const genSel = document.getElementById('filter-genre').value.trim().toLowerCase();
+    const anioSel= document.getElementById('filter-year').value.trim();
 
-            const esJuego = archivoActual === 'juegos.csv';
-            const esPeli  = archivoActual === 'peliculas.csv';
+    // Sync pill
+    document.querySelectorAll('.genre-pill').forEach(p => {
+        p.classList.toggle('active', p.textContent.trim().toLowerCase() === genSel);
+    });
 
-            lista.forEach(item => {
-                let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
-                if (esJuego || esPeli) infoBadge = `Año: ${item.anio.split(' ')[0]}`;
+    const filtrados = datosActuales.filter(it => {
+        const okTitulo = !busq    || it.titulo.toLowerCase().includes(busq);
+        const okGenero = !genSel  || it.generos.toLowerCase().split(',').map(g=>g.trim()).includes(genSel);
+        const okAnio   = !anioSel || it.anioNum === anioSel;
+        return okTitulo && okGenero && okAnio;
+    });
 
-                const ratingBadge = (item.imdb && item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0')
-                    ? `<span class="badge-imdb">⭐ ${parseFloat(item.imdb).toFixed(1)}</span>` : '';
+    document.getElementById('results-count').textContent =
+        filtrados.length + ' resultado' + (filtrados.length !== 1 ? 's' : '');
 
-                const cardContainer = document.createElement('div');
-                cardContainer.className = 'card-container';
-                cardContainer.addEventListener('click', () => cardContainer.classList.toggle('flipped'));
+    renderizarGrid(filtrados, false);
+}
 
-                cardContainer.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="thumbnail-container">
-                                ${ratingBadge}
-                                <span class="badge-info">${infoBadge}</span>
-                                <img src="${item.imagen}" alt="${item.titulo}"
-                                     onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text='+encodeURIComponent('${item.titulo.substring(0,20)}')">
-                            </div>
-                            <div class="series-info">
-                                <div class="series-title" title="${item.titulo}">${item.titulo}</div>
-                                <div class="series-meta">${item.anio} ${item.generos ? '• ' + item.generos.split(',')[0].trim() : ''}</div>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="back-title">${item.titulo}</div>
-                            <div class="back-synopsis">${item.sinopsis}</div>
-                            <div class="back-footer">
-                                <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
-                                <div><strong>Año:</strong> ${item.anio}</div>
-                            </div>
-                        </div>
+function renderizarGrid(lista, esInicio) {
+    const container = document.getElementById('grid-container');
+    container.innerHTML = '';
+
+    if (lista.length === 0) {
+        container.innerHTML = '<div class="status-message">No se encontraron resultados.</div>';
+        return;
+    }
+
+    if (esInicio) {
+        document.getElementById('results-count').textContent =
+            lista.length + ' título' + (lista.length !== 1 ? 's' : '') + ' en el catálogo';
+    }
+
+    const esJuego = archivoActual === 'juegos.csv';
+    const esPeli  = archivoActual === 'peliculas.csv';
+
+    lista.forEach(item => {
+        let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
+        if (esJuego || esPeli) infoBadge = `Año: ${item.anio.split(' ')[0]}`;
+        if (esInicio) infoBadge = item.anio.split(' ')[0] || 'N/A';
+
+        const ratingBadge = (item.imdb && item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0')
+            ? `<span class="badge-imdb">⭐ ${parseFloat(item.imdb).toFixed(1)}</span>` : '';
+
+        const catBadge = esInicio && item._cat
+            ? `<span class="badge-cat">${item._cat}</span>` : '';
+
+        // Escapar comillas en titulo para el onerror
+        const tituloEsc = (item.titulo || '').replace(/'/g, "\\'").replace(/"/g, '&quot;').substring(0, 20);
+
+        const card = document.createElement('div');
+        card.className = 'card-container';
+        card.addEventListener('click', () => card.classList.toggle('flipped'));
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="thumbnail-container">
+                        ${ratingBadge}
+                        <span class="badge-info">${infoBadge}</span>
+                        ${catBadge}
+                        <img src="${item.imagen}" alt="${item.titulo}"
+                             onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text=${encodeURIComponent(tituloEsc)}'">
                     </div>
-                `;
-                container.appendChild(cardContainer);
-            });
-        }
-    </script>
+                    <div class="series-info">
+                        <div class="series-title" title="${item.titulo}">${item.titulo}</div>
+                        <div class="series-meta">${item.anio}${item.generos ? ' • ' + item.generos.split(',')[0].trim() : ''}</div>
+                    </div>
+                </div>
+                <div class="card-back">
+                    <div class="back-title">${item.titulo}</div>
+                    <div class="back-synopsis">${item.sinopsis}</div>
+                    <div class="back-footer">
+                        <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
+                        <div><strong>Año:</strong> ${item.anio}</div>
+                        ${item._cat ? `<div><strong>Categoría:</strong> ${item._cat}</div>` : ''}
+                    </div>
+                </div>
+            </div>`;
+        container.appendChild(card);
+    });
+}
+</script>
 </body>
 </html>
