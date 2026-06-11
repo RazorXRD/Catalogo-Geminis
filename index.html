@@ -5,392 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Rider - Catálogo Global</title>
     <style>
-        /* ==========================================
-           🎨 PALETA DE COLORES NEÓN (CLOUD RIDER)
-           ========================================== */
-        :root {
-            --cyan-neon: #00d4ff;   /* Cian brillante del logo */
-            --pink-neon: #ff1493;   /* Rosa eléctrico del logo */
-            --bg-dark: #080810;     /* Fondo ultra oscuro azulado */
-            --card-bg: #14141f;     /* Gris azulado para tarjetas */
-            --card-back-bg: #0e0e18;/* Reverso de tarjetas */
-            --text-main: #eaeaea;   /* Texto principal */
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding-bottom: 50px;
-        }
-
-        header {
-            background-color: #000000;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--cyan-neon); /* Línea cian de separación */
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        /* Contenedor del Logo con el Lobo */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* Espacio para la imagen real de tu logo en GitHub */
-        .logo-img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-        }
-
-        .logo-text {
-            font-size: 26px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .catalog-tabs {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 5px 0;
-        }
-
-        .catalog-tabs::-webkit-scrollbar { height: 4px; }
-        .catalog-tabs::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
-        .catalog-tabs button {
-            background-color: #1a1a26;
-            border: 1px solid #33334d;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .catalog-tabs button:hover, .catalog-tabs button.active {
-            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
-            border-color: transparent;
-            color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .section-title {
-            font-size: 22px;
-            border-left: 4px solid var(--pink-neon); /* Detalle rosa */
-            padding-left: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #141424;
-            border: 1px solid #33334d;
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-
-        .search-box input {
-            background: none;
-            border: none;
-            color: white;
-            outline: none;
-            padding: 3px;
-            font-size: 14px;
-            width: 220px;
-        }
-
-        /* ==========================================
-           🎴 GRID Y EFECTO DE GIRO (FLIP CARDS)
-           ========================================== */
-        .series-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
-        }
-
-        .card-container {
-            background-color: transparent;
-            height: 380px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-
-        .card-container:hover .card-inner,
-        .card-container.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        /* Cara de adelante */
-        .card-front {
-            background-color: var(--card-bg);
-            color: white;
-        }
-
-        .thumbnail-container {
-            position: relative;
-            width: 100%;
-            height: 290px;
-            background-color: #1f1f33;
-        }
-
-        .thumbnail-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .badge-imdb {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #f5c518;
-            color: #000000;
-            padding: 3px 6px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 3px;
-            z-index: 2;
-        }
-
-        .badge-info {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: var(--cyan-neon); /* Texto del badge en cian */
-            padding: 3px 6px;
-            font-size: 11px;
-            font-weight: 600;
-            border-radius: 3px;
-            border: 1px solid var(--cyan-neon);
-            z-index: 2;
-        }
-
-        .series-info {
-            padding: 12px;
-            background-color: var(--card-bg);
-            height: 90px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .series-title {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 5px;
-            text-align: left;
-        }
-
-        .series-meta {
-            font-size: 12px;
-            color: #8fa0b3;
-            text-align: left;
-        }
-
-        /* Cara de atrás */
-        .card-back {
-            background-color: var(--card-back-bg);
-            color: #ffffff;
-            transform: rotateY(180deg);
-            padding: 20px;
-            border: 2px solid var(--pink-neon); /* Resplandor rosa al girar */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            text-align: left;
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
-        }
-
-        .back-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: var(--cyan-neon); /* Título trasero en cian */
-            margin-bottom: 8px;
-            border-bottom: 1px solid #22223b;
-            padding-bottom: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .back-synopsis {
-            font-size: 13px;
-            line-height: 1.5;
-            color: #cccccc;
-            overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 5px;
-        }
-
-        .back-synopsis::-webkit-scrollbar { width: 4px; }
-        .back-synopsis::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
-        .back-footer {
-            font-size: 11px;
-            color: #6272a4;
-            margin-top: 10px;
-            padding-top: 5px;
-            border-top: 1px solid #22223b;
-        }
-
-        .status-message {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            color: #6272a4;
-            font-size: 16px;
-        }
-
-        .btn-retry-local {
-            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            display: inline-block;
-        }
-
-        #local-file-picker { display: none; }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: #040408;
-            margin-top: 50px;
-            border-top: 1px solid #1a1a26;
-            color: #44475a;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; }
-            .catalog-tabs { width: 100%; justify-content: flex-start; }
-            .section-header { flex-direction: column; align-items: flex-start; }
-            .search-box { width: 100%; }
-            .search-box input { width: 100%; }
-            .series-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-            .card-container { height: 320px; }
-            .thumbnail-container { height: 230px; }
-        }
+        :root { --cyan-neon: #00d4ff; --pink-neon: #ff1493; --bg-dark: #080810; --card-bg: #14141f; --card-back-bg: #0e0e18; --text-main: #eaeaea; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 50px; }
+        header { background-color: #000000; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--cyan-neon); box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 15px 20px; flex-wrap: wrap; gap: 15px; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 45px; height: 45px; object-fit: contain; }
+        .logo-text { font-size: 26px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .catalog-tabs { display: flex; list-style: none; gap: 10px; overflow-x: auto; white-space: nowrap; padding: 5px 0; }
+        .catalog-tabs button { background-color: #1a1a26; border: 1px solid #33334d; color: #ffffff; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; }
+        .catalog-tabs button:hover, .catalog-tabs button.active { background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon)); border-color: transparent; box-shadow: 0 0 10px rgba(0, 212, 255, 0.4); }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+        .section-title { font-size: 22px; border-left: 4px solid var(--pink-neon); padding-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .search-controls { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+        .search-box { display: flex; align-items: center; background-color: #141424; border: 1px solid #33334d; padding: 6px 12px; border-radius: 4px; }
+        .search-box input { background: none; border: none; color: white; outline: none; padding: 3px; font-size: 14px; width: 220px; }
+        .filters-container { display: flex; gap: 8px; }
+        .filter-input { background: #141424; color: white; border: 1px solid #33334d; padding: 5px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-clear { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; }
+        .card-container { background-color: transparent; height: 380px; perspective: 1000px; cursor: pointer; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .card-container:hover .card-inner, .card-container.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; overflow: hidden; background: var(--card-bg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .card-back { background-color: var(--card-back-bg); transform: rotateY(180deg); padding: 20px; border: 2px solid var(--pink-neon); }
+        .thumbnail-container { position: relative; height: 290px; }
+        .thumbnail-container img { width: 100%; height: 100%; object-fit: cover; }
+        .badge-imdb { position: absolute; top: 10px; left: 10px; background: #f5c518; color: #000; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold; }
+        .badge-info { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: var(--cyan-neon); border: 1px solid var(--cyan-neon); padding: 2px 6px; border-radius: 3px; font-size: 11px; }
+        .series-info { padding: 12px; }
+        .status-message { grid-column: 1 / -1; text-align: center; padding: 40px; color: #6272a4; }
     </style>
 </head>
 <body>
-
     <header>
         <div class="navbar">
             <div class="logo-container">
                 <img src="logotipo.jpg" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
                 <div class="logo-text">Cloud Rider</div>
             </div>
-            <nav>
-                <div class="catalog-tabs" id="catalog-tabs">
-                    <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
-                    <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
-                    <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
-                    <button onclick="cambiarCatalogo('novelas.csv')">Novelas</button>
-                    <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
-                    <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
-                    <button onclick="cambiarCatalogo('animados.csv')">Animados</button>
-                </div>
-            </nav>
+            <nav><div class="catalog-tabs" id="catalog-tabs">
+                <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
+                <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
+                <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
+                <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
+                <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
+            </div></nav>
         </div>
     </header>
 
     <main class="container">
         <div class="section-header">
             <h2 class="section-title" id="catalog-title">Cargando...</h2>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Buscar por título...">
+            <div class="search-controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Buscar por título...">
+                </div>
+                <div class="filters-container">
+                    <select id="filter-genre" class="filter-input">
+                        <option value="">Género</option>
+                        <option value="Acción">Acción</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Comedia">Comedia</option>
+                        <option value="Ciencia Ficción">Ciencia Ficción</option>
+                    </select>
+                    <select id="filter-year" class="filter-input">
+                        <option value="">Año</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2020">2020-2023</option>
+                        <option value="2010">2010-2019</option>
+                    </select>
+                    <button id="clear-filters" class="btn-clear">×</button>
+                </div>
             </div>
         </div>
-
-        <div class="series-grid" id="grid-container">
-            <div class="status-message">Iniciando...</div>
-        </div>
+        <div class="series-grid" id="grid-container"><div class="status-message">Iniciando...</div></div>
     </main>
-
-    <input type="file" id="local-file-picker" accept=".csv">
-
-    <footer>
-        <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
-    </footer>
 
     <script>
         let datosActuales = [];
@@ -399,168 +93,74 @@
         document.addEventListener("DOMContentLoaded", () => {
             cambiarCatalogo('series.csv');
             document.getElementById('search-input').addEventListener('input', filtrarContenido);
-            document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
+            document.getElementById('filter-genre').addEventListener('change', filtrarContenido);
+            document.getElementById('filter-year').addEventListener('change', filtrarContenido);
+            document.getElementById('clear-filters').addEventListener('click', () => {
+                document.getElementById('search-input').value = '';
+                document.getElementById('filter-genre').value = '';
+                document.getElementById('filter-year').value = '';
+                filtrarContenido();
+            });
         });
 
         function cambiarCatalogo(nombreArchivo) {
             archivoActual = nombreArchivo;
-            
-            document.querySelectorAll('.catalog-tabs button').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.getAttribute('onclick').includes(nombreArchivo)) {
-                    btn.classList.add('active');
-                    document.getElementById('catalog-title').innerText = btn.innerText;
-                }
-            });
-
-            const container = document.getElementById('grid-container');
-            container.innerHTML = '<div class="status-message">Buscando base de datos multimedia...</div>';
-
-            fetch(nombreArchivo)
-                .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar " + nombreArchivo);
-                    return response.text();
-                })
-                .then(texto => {
-                    procesarCSV(texto);
-                })
-                .catch(error => {
-                    container.innerHTML = `
-                        <div class="status-message" style="color: var(--pink-neon);">
-                            <p>Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</p>
-                            <label for="local-file-picker" class="btn-retry-local">O cargar "${nombreArchivo}" manualmente desde tu PC</label>
-                        </div>`;
-                    console.error(error);
-                });
-        }
-
-        function cargarArchivoLocal(evt) {
-            const archivo = evt.target.files[0];
-            if (!archivo) return;
-            const lector = new FileReader();
-            lector.onload = function(e) {
-                procesarCSV(e.target.result);
-            };
-            lector.readAsText(archivo, 'UTF-8');
+            fetch(nombreArchivo).then(r => r.text()).then(t => procesarCSV(t));
         }
 
         function procesarCSV(texto) {
-            let lineas = [];
-            if (archivoActual === 'animados.csv' && texto.includes('\t')) {
-                let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
-                lineas = textoLimpio.split('\n');
-            } else {
-                lineas = texto.split(/\r?\n/);
-            }
-
-            if (lineas.length < 2) return;
-
-            let separador = ';';
-            if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) {
-                separador = '\t';
-            }
-
-            const cabeceras = lineas[0].replace(/"/g, '').split(separador).map(c => c.trim().toLowerCase());
-            datosActuales = [];
-
-            for (let i = 1; i < lineas.length; i++) {
-                if (!lineas[i].trim()) continue;
-                
-                let fila = lineas[i];
-                if (fila.startsWith('"') && fila.endsWith('"')) {
-                    fila = fila.substring(1, fila.length - 1);
-                }
-
-                const columnas = fila.split(separador);
-                const obj = {};
-                
-                cabeceras.forEach((cabecera, index) => {
-                    obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
-                });
-
-                const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
-                const anioFinal = obj.anio || "N/A";
-                const imagenFinal = obj.link_imagen || obj.poster_url || ""; 
-                const scoreFinal = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
-                const tempFinal = obj.temporadas || "1";
-                const capFinal = obj.capitulos || obj.episodios || "0";
-                const sinopsisFinal = obj.sinopsis || "No hay sinopsis disponible para este título.";
-                const generosFinal = obj.generos || "";
-
-                datosActuales.push({
-                    titulo: tituloFinal,
-                    anio: anioFinal,
-                    imagen: imagenFinal, 
-                    imdb: scoreFinal,
-                    temporadas: tempFinal,
-                    capitulos: capFinal,
-                    sinopsis: sinopsisFinal,
-                    generos: generosFinal
-                });
-            }
-
+            const lineas = texto.split(/\r?\n/);
+            const cabeceras = lineas[0].split(';').map(c => c.trim().toLowerCase());
+            datosActuales = lineas.slice(1).filter(l => l.trim()).map(linea => {
+                const col = linea.split(';');
+                let obj = {};
+                cabeceras.forEach((c, i) => obj[c] = col[i] || '');
+                return { titulo: obj.titulo || 'Sin título', anio: obj.anio || 'N/A', imagen: obj.link_imagen || '', imdb: obj.puntuacion || 'N/A', sinopsis: obj.sinopsis || '', generos: obj.generos || '' };
+            });
             filtrarContenido();
         }
 
         function filtrarContenido() {
             const busqueda = document.getElementById('search-input').value.toLowerCase();
-            const filtrados = datosActuales.filter(item => 
-                item.titulo.toLowerCase().includes(busqueda)
-            );
+            const generoSel = document.getElementById('filter-genre').value;
+            const anioSel = document.getElementById('filter-year').value;
+
+            const filtrados = datosActuales.filter(item => {
+                const coincideTitulo = item.titulo.toLowerCase().includes(busqueda);
+                const coincideGenero = generoSel === "" || (item.generos && item.generos.includes(generoSel));
+                let coincideAnio = true;
+                if (anioSel !== "") {
+                    const match = item.anio.match(/\d{4}/);
+                    const y = match ? parseInt(match[0]) : 0;
+                    if (anioSel === "2026") coincideAnio = y >= 2026;
+                    else if (anioSel === "2025") coincideAnio = y === 2025;
+                    else if (anioSel === "2024") coincideAnio = y === 2024;
+                    else if (anioSel === "2020") coincideAnio = (y >= 2020 && y <= 2023);
+                    else if (anioSel === "2010") coincideAnio = (y >= 2010 && y <= 2019);
+                }
+                return coincideTitulo && coincideGenero && coincideAnio;
+            });
             renderizarGrid(filtrados);
         }
 
         function renderizarGrid(lista) {
             const container = document.getElementById('grid-container');
-            container.innerHTML = '';
-
-            if (lista.length === 0) {
-                container.innerHTML = `<div class="status-message">No se encontraron resultados en esta sección.</div>`;
-                return;
-            }
-
-            lista.forEach(item => {
-                const esJuego = archivoActual === 'juegos.csv';
-                const esPeli = archivoActual === 'peliculas.csv';
-                
-                let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
-                if (esJuego || esPeli) {
-                    infoBadge = `Año: ${item.anio.split(' ')[0]}`;
-                }
-
-                const ratingBadge = (item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0') ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : '';
-
-                const cardContainer = document.createElement('div');
-                cardContainer.className = 'card-container';
-                
-                cardContainer.addEventListener('click', () => {
-                    cardContainer.classList.toggle('flipped');
-                });
-
-                cardContainer.innerHTML = `
+            container.innerHTML = lista.map(item => `
+                <div class="card-container" onclick="this.classList.toggle('flipped')">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="thumbnail-container">
-                                ${ratingBadge}
-                                <span class="badge-info">${infoBadge}</span>
-                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text='+encodeURIComponent(item.titulo)">
+                                ${item.imdb !== 'N/A' ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : ''}
+                                <img src="${item.imagen}" onerror="this.src='https://via.placeholder.com/250x350'">
                             </div>
-                            <div class="series-info">
-                                <div class="series-title" title="${item.titulo}">${item.titulo}</div>
-                                <div class="series-meta">${item.anio}</div>
-                            </div>
+                            <div class="series-info"><h3>${item.titulo}</h3><p>${item.anio}</p></div>
                         </div>
                         <div class="card-back">
-                            <div class="back-title">${item.titulo}</div>
-                            <div class="back-synopsis">${item.sinopsis}</div>
-                            <div class="back-footer">
-                                <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
-                            </div>
+                            <h3>${item.titulo}</h3><p style="margin-top:10px;">${item.sinopsis}</p>
                         </div>
                     </div>
-                `;
-                container.appendChild(cardContainer);
-            });
+                </div>
+            `).join('');
         }
     </script>
 </body>
