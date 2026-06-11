@@ -1,408 +1,567 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud Rider &mdash; Cat&aacute;logo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --cyan:#00d4ff;--pink:#ff1493;--dark-cyan:#00a8cc;
-  --bg:#080810;--s1:#0e0e18;--s2:#14141f;--s3:#1c1c2a;
-  --txt:#eaeaea;--muted:#777;--border:#1e1e2e;
-  --green:#1db954;--amber:#f59e0b;
-  --fh:'Bebas Neue',sans-serif;--fb:'Barlow',sans-serif;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:var(--fb);min-height:100vh;overflow-x:hidden}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Rider - Catálogo Global</title>
+    <style>
+        /* ==========================================
+           🎨 PALETA DE COLORES NEÓN (CLOUD RIDER)
+           ========================================== */
+        :root {
+            --cyan-neon: #00d4ff;   /* Cian brillante del logo */
+            --pink-neon: #ff1493;   /* Rosa eléctrico del logo */
+            --bg-dark: #080810;     /* Fondo ultra oscuro azulado */
+            --card-bg: #14141f;     /* Gris azulado para tarjetas */
+            --card-back-bg: #0e0e18;/* Reverso de tarjetas */
+            --text-main: #eaeaea;   /* Texto principal */
+        }
 
-/* ── NAV ── */
-#nav{
-  position:sticky;top:0;z-index:300;min-height:58px;
-  background:rgba(8,8,16,.97);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(0,212,255,.12);
-  display:flex;align-items:stretch;padding:0 18px;gap:0;
-}
-#logo-wrap{display:flex;align-items:center;gap:10px;margin-right:20px;flex-shrink:0;text-decoration:none}
-#hamburger{display:none}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-/* 🐺 Tamaño del logo */
-#logo-img{width:38px;height:38px;object-fit:contain}
-#logo-fallback{
-  font-family:var(--fh);font-size:22px;letter-spacing:1px;
-  color:var(--cyan);font-weight:bold;margin-right:2px;display:none;
-}
-#logo-text{font-family:var(--fh);font-size:22px;letter-spacing:2px;
-  background:linear-gradient(135deg,var(--cyan),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-#nav-menu{display:flex;flex-direction:column;align-items:stretch;flex:1;gap:0}
-.nav-row{display:flex;align-items:center;gap:1px;overflow:visible;scrollbar-width:none;flex-wrap:wrap}
-.nav-row::-webkit-scrollbar{display:none}
-.nav-row-1{border-bottom:1px solid rgba(255,255,255,.08)}
-.nav-row-2{padding-top:2px;flex-wrap:wrap;gap:4px}
-#active-filters{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-left:6px}
-.af-chip{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:2px 8px 2px 10px;border-radius:20px;
-  background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.4);
-  color:var(--cyan);font-size:11px;font-family:var(--fh);letter-spacing:.5px;
-  cursor:pointer;transition:background .15s;
-}
-.af-chip:hover{background:rgba(0,212,255,.28)}
-.af-chip .af-x{font-size:13px;opacity:.7;line-height:1}
-.af-clear{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:2px 10px;border-radius:20px;
-  background:rgba(255,60,100,.15);border:1px solid rgba(255,60,100,.4);
-  color:#ff6b8a;font-size:11px;font-family:var(--fh);letter-spacing:.5px;
-  cursor:pointer;transition:background .15s;
-}
-.af-clear:hover{background:rgba(255,60,100,.3)}
-#nav-menu::-webkit-scrollbar{display:none}
-.nm{font-family:var(--fb);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
-  color:#666;padding:6px 11px;border-radius:5px;border:none;background:transparent;
-  cursor:pointer;white-space:nowrap;transition:all .15s;}
-.nm:hover{color:#fff;background:rgba(255,255,255,.06)}
-.nm.on{color:var(--cyan)}
-.nm-drop{position:relative}
-.nm-drop:hover .dmenu{display:block}
-.dmenu.open{display:block !important}
-.dmenu{display:none;position:absolute;top:calc(100% + 2px);left:0;min-width:160px;
-  background:#0a0a14;border:1px solid rgba(0,212,255,.15);border-radius:8px;
-  padding:5px 0;z-index:400;box-shadow:0 10px 30px rgba(0,0,0,.8);}
-.dmenu.scrollable{max-height:280px;overflow-y:auto}
-.dmenu a{display:block;padding:7px 14px;font-size:11px;font-weight:600;letter-spacing:.6px;
-  text-transform:uppercase;color:#888;text-decoration:none;transition:all .12s;}
-.dmenu a:hover{color:var(--cyan);background:rgba(0,212,255,.06);padding-left:18px}
-.dmenu a.on{color:var(--cyan)}
-#nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
-#srch{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;color:var(--txt);padding:0 14px;height:32px;font-size:12.5px;
-  font-family:var(--fb);outline:none;transition:all .2s;width:160px;}
-#srch:focus{border-color:var(--cyan);width:200px;background:rgba(0,212,255,.04)}
-#srch::placeholder{color:#333}
-#cart-btn{
-  position:relative;background:linear-gradient(135deg,var(--cyan),var(--pink));
-  border:none;border-radius:8px;color:#fff;padding:6px 14px;font-size:12px;
-  font-weight:700;cursor:pointer;font-family:var(--fb);letter-spacing:.5px;
-  white-space:nowrap;transition:opacity .15s;
-}
-#cart-btn:hover{opacity:.85}
-#cart-count{
-  position:absolute;top:-6px;right:-6px;background:var(--pink);color:#fff;
-  border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;
-  display:none;align-items:center;justify-content:center;
-}
-#cart-count.show{display:flex}
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding-bottom: 50px;
+        }
 
-/* ── STATUS BAR ── */
-#sbar{padding:7px 18px;display:flex;justify-content:space-between;align-items:center;
-  gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);}
-.sc{font-size:11px;color:#444}.sc b{color:var(--txt);font-weight:600}
-.sc.cy b{color:var(--cyan)}.sc.pk b{color:var(--pink)}.sc.gn b{color:var(--green)}
-#srt{background:rgba(255,255,255,.04);border:1px solid var(--border);color:#777;
-  border-radius:6px;padding:4px 9px;font-size:11.5px;cursor:pointer;outline:none;font-family:var(--fb);}
+        header {
+            background-color: #000000;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--cyan-neon); /* Línea cian de separación */
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+        }
 
-/* ── GRID ── */
-#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
-  gap:12px;padding:14px 18px 18px;}
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-/* ── CARD ── */
-.card{border-radius:9px;overflow:hidden;cursor:pointer;position:relative;
-  background:var(--s1);border:1px solid var(--border);
-  transition:transform .2s ease,box-shadow .2s,border-color .2s;
-  contain:layout style;will-change:transform;}
-.card:hover{transform:translateY(-5px) scale(1.02);
-  box-shadow:0 12px 36px rgba(0,212,255,.15),0 0 0 1px var(--cyan);border-color:var(--cyan);z-index:2;}
-.poster{aspect-ratio:2/3;overflow:hidden;position:relative;background:var(--s2);}
-.poster img{width:100%;height:100%;object-fit:cover;display:block;
-  opacity:0;transition:opacity .3s ease;will-change:opacity;image-rendering:auto;}
-.poster img.ok{opacity:1}
-.poster-ph{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:8px;color:#1a1a2a;padding:10px;text-align:center;}
-.poster-ph svg{width:32px;height:32px;flex-shrink:0;opacity:.3}
-.poster-ph span{font-size:9.5px;color:#222;line-height:1.3;word-break:break-word}
-.card-badge{position:absolute;top:6px;left:6px;z-index:3;
-  font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:8px;letter-spacing:.3px;}
-.cat-badge{position:absolute;top:6px;right:6px;z-index:3;
-  font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:6px;letter-spacing:.4px;
-  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:#aaa;}
-.bv{background:rgba(29,185,84,.9);color:#fff}
-.bf{background:rgba(255,20,147,.9);color:#fff}
-.bp{background:rgba(245,158,11,.9);color:#fff}
-.card-ov{position:absolute;inset:0;
-  background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.2) 55%,transparent 100%);
-  opacity:0;transition:opacity .18s;display:flex;flex-direction:column;
-  justify-content:flex-end;padding:10px 8px 8px;pointer-events:none;}
-.card:hover .card-ov{opacity:1}
-.ov-t{font-size:11.5px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:2px}
-.ov-m{font-size:10px;color:#aaa}
-.card-info{padding:7px 8px 8px}
-.card-title{font-size:11.5px;font-weight:500;color:var(--txt);line-height:1.35;
-  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:2px;}
-.card-year{font-size:10px;color:var(--muted);margin-bottom:5px}
-.card-genres{font-size:9.5px;color:#383848;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-acts{display:flex;gap:3px}
-.ca{flex:1;border:1px solid var(--border);background:transparent;color:#444;
-  font-size:12px;padding:4px;border-radius:5px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .14s;}
-.ca:hover{border-color:#555;color:#ccc}
-.ca.av{background:rgba(29,185,84,.12);border-color:var(--green);color:var(--green)}
-.ca.af{background:rgba(255,20,147,.12);border-color:var(--pink);color:var(--pink)}
-.ca.ap{background:rgba(245,158,11,.12);border-color:var(--amber);color:var(--amber)}
-.ca.ac{background:rgba(0,212,255,.12);border-color:var(--cyan);color:var(--cyan)}
+        /* Contenedor del Logo con el Lobo */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-/* ── PAGER ── */
-#pager{display:flex;justify-content:center;gap:5px;padding:10px 18px 32px;flex-wrap:wrap}
-.pg{background:var(--s2);border:1px solid var(--border);color:#666;
-  border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;
-  transition:all .14s;font-family:var(--fb);}
-.pg:hover{border-color:#555;color:#fff}
-.pg.on{background:var(--cyan);border-color:var(--cyan);color:#000;font-weight:700}
-.pg:disabled{opacity:.25;cursor:not-allowed}
-.pg-dots{color:#333;padding:5px 3px;font-size:13px}
+        /* Espacio para la imagen real de tu logo en GitHub */
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
 
-/* ── DETAIL ── */
-#detail{position:fixed;inset:0;z-index:600;overflow-y:auto;background:var(--bg);display:none;}
-#detail.open{display:block;animation:fadeIn .18s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-#det-nav{position:sticky;top:0;z-index:10;padding:12px 20px;
-  background:linear-gradient(180deg,rgba(8,8,16,.98) 0%,transparent 100%);
-  display:flex;align-items:center;gap:12px;}
-#det-back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
-  color:#fff;border-radius:7px;padding:7px 14px;font-size:12px;
-  cursor:pointer;font-family:var(--fb);display:flex;align-items:center;gap:5px;transition:all .15s;}
-#det-back:hover{background:rgba(255,255,255,.14)}
-#det-add-cart{background:linear-gradient(135deg,var(--cyan),var(--pink));
-  border:none;color:#fff;border-radius:7px;padding:7px 14px;font-size:12px;
-  font-weight:700;cursor:pointer;font-family:var(--fb);transition:opacity .15s;margin-left:auto;}
-#det-add-cart:hover{opacity:.85}
-#det-add-cart.added{background:#1a3a1a;border:1px solid var(--green);color:var(--green)}
-#det-tit-nav{font-family:var(--fh);font-size:16px;color:#fff;letter-spacing:1px;opacity:.6;
-  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:300px;}
-#det-backdrop{position:fixed;top:0;left:0;right:0;height:65vh;
-  background-size:cover;background-position:center 20%;
-  mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 100%);
-  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 100%);
-  pointer-events:none;z-index:0;}
-#det-body{position:relative;z-index:1;display:flex;gap:26px;
-  padding:16px 22px 36px;flex-wrap:wrap;margin-top:-30px;}
-#det-poster{width:185px;flex-shrink:0;border-radius:10px;overflow:hidden;
-  box-shadow:0 16px 48px rgba(0,0,0,.85);align-self:flex-start;margin-top:55px;}
-#det-poster img{width:100%;display:block}
-#det-poster-ph{width:100%;aspect-ratio:2/3;background:var(--s2);
-  display:flex;align-items:center;justify-content:center;color:#1a1a2a;}
-#det-info{flex:1;min-width:240px;padding-top:110px}
-#det-name{font-family:var(--fh);font-size:40px;
-  background:linear-gradient(135deg,#fff 60%,var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  letter-spacing:2px;line-height:1;margin-bottom:5px;text-shadow:none;}
-#det-tagline{font-size:12.5px;color:#555;font-style:italic;margin-bottom:14px}
-#det-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;align-items:center}
-.chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;padding:3px 11px;font-size:11.5px;color:#bbb;}
-.chip.rat{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:var(--amber)}
-.chip.tp{background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.2);color:var(--cyan)}
-#det-overview{font-size:13px;color:#aaa;line-height:1.75;margin-bottom:16px;max-width:560px}
-#det-genres{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
-.dg{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
-  color:var(--cyan);border-radius:14px;padding:3px 11px;font-size:11px;font-weight:600;}
-#det-acts{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
-.da{border:1px solid var(--border);background:rgba(255,255,255,.03);color:#777;
-  border-radius:7px;padding:7px 15px;font-size:12px;cursor:pointer;font-weight:600;
-  transition:all .16s;font-family:var(--fb);display:flex;align-items:center;gap:5px;}
-.da:hover{border-color:#666;color:#fff;background:rgba(255,255,255,.07)}
-.da.av{background:rgba(29,185,84,.1);border-color:var(--green);color:var(--green)}
-.da.af{background:rgba(255,20,147,.1);border-color:var(--pink);color:var(--pink)}
-.da.ap{background:rgba(245,158,11,.1);border-color:var(--amber);color:var(--amber)}
-#det-trailer{margin-top:6px}
-#det-trailer iframe{width:100%;max-width:520px;aspect-ratio:16/9;border-radius:9px;border:none;display:block;}
-#det-not-found{font-size:13px;color:#444;padding:8px 0;line-height:1.6}
-#det-cast-section{padding:0 22px 48px;position:relative;z-index:1}
-#det-cast-section h3{font-family:var(--fh);font-size:20px;letter-spacing:1px;
-  color:var(--cyan);margin-bottom:12px;}
-#det-cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:9px}
-.cc{text-align:center}
-.cc-img{width:100%;aspect-ratio:2/3;border-radius:6px;object-fit:cover;
-  background:var(--s2);display:block;margin-bottom:4px;}
-.cc-ph{width:100%;aspect-ratio:2/3;border-radius:6px;background:var(--s2);
-  display:flex;align-items:center;justify-content:center;color:#1a1a2a;margin-bottom:4px;}
-.cc-name{font-size:10px;color:#ccc;line-height:1.2}
-.cc-char{font-size:9.5px;color:#444;margin-top:2px}
-.spin-wrap{display:flex;align-items:center;gap:9px;color:#444;font-size:12.5px;padding:18px 0}
-.spin{width:17px;height:17px;border:2px solid #1a1a2a;border-top-color:var(--cyan);
-  border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
-@keyframes sp{to{transform:rotate(360deg)}}
+        .logo-text {
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* ── CART PANEL ── */
-#cart-panel{
-  position:fixed;top:0;right:-400px;width:360px;max-width:100vw;height:100vh;
-  background:#0a0a16;border-left:1px solid rgba(0,212,255,.15);
-  z-index:700;transition:right .28s cubic-bezier(.25,.46,.45,.94);
-  display:flex;flex-direction:column;
-}
-#cart-panel.open{right:0}
-#cart-head{padding:16px 18px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;}
-#cart-head h2{font-family:var(--fh);font-size:22px;letter-spacing:1px;
-  background:linear-gradient(135deg,var(--cyan),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-#cart-close{background:transparent;border:1px solid var(--border);color:#888;
-  border-radius:6px;padding:6px 10px;cursor:pointer;font-size:16px;}
-#cart-close:hover{border-color:#555;color:#fff}
-#cart-items{flex:1;overflow-y:auto;padding:12px 18px}
-.cart-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center}
-.cart-item-img{width:40px;height:60px;border-radius:5px;object-fit:cover;background:var(--s2);flex-shrink:0}
-.cart-item-info{flex:1;min-width:0}
-.cart-item-title{font-size:12px;font-weight:500;color:var(--txt);
-  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-bottom:2px}
-.cart-item-cat{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
-.cart-item-del{background:transparent;border:none;color:#444;cursor:pointer;font-size:15px;padding:4px;
-  flex-shrink:0;transition:color .14s;}
-.cart-item-del:hover{color:var(--pink)}
-#cart-empty{text-align:center;padding:40px 20px;color:#333;font-size:13px}
-#cart-foot{padding:14px 18px;border-top:1px solid var(--border)}
-#cart-count-label{font-size:12px;color:#555;margin-bottom:10px}
-#cart-count-label b{color:var(--txt)}
-#cart-send{width:100%;background:linear-gradient(135deg,#25D366,#128C7E);
-  border:none;color:#fff;border-radius:8px;padding:12px;font-size:14px;font-weight:700;
-  cursor:pointer;font-family:var(--fb);letter-spacing:.5px;transition:opacity .15s;
-  display:flex;align-items:center;justify-content:center;gap:8px;}
-#cart-send:hover{opacity:.88}
-#cart-send:disabled{opacity:.3;cursor:not-allowed}
-#cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:699;display:none}
-#cart-overlay.show{display:block}
+        .catalog-tabs {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 0;
+        }
 
-/* ── MISC ── */
-#empty{text-align:center;padding:70px 20px;color:#252535;grid-column:1/-1}
-#empty p{font-size:13px;margin-top:8px}
-#bktop{position:fixed;bottom:20px;right:20px;
-  background:linear-gradient(135deg,var(--cyan),var(--pink));
-  color:#000;border:none;border-radius:50%;width:38px;height:38px;font-size:17px;
-  cursor:pointer;display:none;align-items:center;justify-content:center;z-index:200;
-  box-shadow:0 4px 14px rgba(0,212,255,.3);font-weight:700;}
-#bktop.show{display:flex}
-#prog-bar{position:fixed;bottom:0;left:0;right:0;height:2px;z-index:500;pointer-events:none}
-#prog-fill{height:100%;width:0%;transition:width .4s;
-  background:linear-gradient(90deg,var(--cyan),var(--pink));
-  box-shadow:0 0 8px var(--cyan);}
+        .catalog-tabs::-webkit-scrollbar { height: 4px; }
+        .catalog-tabs::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
-/* ── SEASONS TABLE ── */
-#det-seasons{margin-bottom:18px}
-.seasons-title{font-family:var(--fh);font-size:14px;letter-spacing:1px;color:#555;
-  margin-bottom:8px;font-weight:400;}
-.seasons-grid{display:flex;flex-wrap:wrap;gap:6px}
-.season-chip{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);
-  border-radius:8px;padding:6px 12px;font-size:11.5px;color:#aaa;cursor:pointer;
-  transition:all .15s;font-family:var(--fb);display:flex;align-items:center;gap:5px;}
-.season-chip:hover{border-color:rgba(0,212,255,.4);color:#fff}
-.season-chip.on{background:rgba(0,212,255,.15);border-color:var(--cyan);color:var(--cyan);font-weight:600}
-.episodes-list{margin-top:10px;display:none;background:#05050b;border:1px solid var(--border);
-  border-radius:8px;max-height:240px;overflow-y:auto;padding:4px 0;}
-.episodes-list.open{display:block}
-.ep-row{padding:8px 14px;font-size:12px;color:#888;border-bottom:1px solid rgba(255,255,255,.03);
-  display:flex;justify-content:between;align-items:center;}
-.ep-row:last-child{border-bottom:none}
-.ep-num{color:var(--cyan);font-weight:600;margin-right:10px;font-family:var(--fh);font-size:13px;letter-spacing:.5px}
-.ep-title{color:#ccc;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-</style>
+        .catalog-tabs button {
+            background-color: #1a1a26;
+            border: 1px solid #33334d;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .catalog-tabs button:hover, .catalog-tabs button.active {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            border-left: 4px solid var(--pink-neon); /* Detalle rosa */
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #141424;
+            border: 1px solid #33334d;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            padding: 3px;
+            font-size: 14px;
+            width: 220px;
+        }
+
+        /* ==========================================
+           🎴 GRID Y EFECTO DE GIRO (FLIP CARDS)
+           ========================================== */
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .card-container {
+            background-color: transparent;
+            height: 380px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-container:hover .card-inner,
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        /* Cara de adelante */
+        .card-front {
+            background-color: var(--card-bg);
+            color: white;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            height: 290px;
+            background-color: #1f1f33;
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-imdb {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #f5c518;
+            color: #000000;
+            padding: 3px 6px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 3px;
+            z-index: 2;
+        }
+
+        .badge-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: var(--cyan-neon); /* Texto del badge en cian */
+            padding: 3px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 3px;
+            border: 1px solid var(--cyan-neon);
+            z-index: 2;
+        }
+
+        .series-info {
+            padding: 12px;
+            background-color: var(--card-bg);
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .series-title {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .series-meta {
+            font-size: 12px;
+            color: #8fa0b3;
+            text-align: left;
+        }
+
+        /* Cara de atrás */
+        .card-back {
+            background-color: var(--card-back-bg);
+            color: #ffffff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            border: 2px solid var(--pink-neon); /* Resplandor rosa al girar */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
+        }
+
+        .back-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--cyan-neon); /* Título trasero en cian */
+            margin-bottom: 8px;
+            border-bottom: 1px solid #22223b;
+            padding-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .back-synopsis {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #cccccc;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 5px;
+        }
+
+        .back-synopsis::-webkit-scrollbar { width: 4px; }
+        .back-synopsis::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+        .back-footer {
+            font-size: 11px;
+            color: #6272a4;
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px solid #22223b;
+        }
+
+        .status-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #6272a4;
+            font-size: 16px;
+        }
+
+        .btn-retry-local {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        #local-file-picker { display: none; }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #040408;
+            margin-top: 50px;
+            border-top: 1px solid #1a1a26;
+            color: #44475a;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; }
+            .catalog-tabs { width: 100%; justify-content: flex-start; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+            .search-box { width: 100%; }
+            .search-box input { width: 100%; }
+            .series-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .card-container { height: 320px; }
+            .thumbnail-container { height: 230px; }
+        }
+    </style>
 </head>
 <body>
 
-  <nav id="nav">
-    <a href="#" id="logo-wrap" onclick="resetAllFilters(event)">
-      <img src="logotipo.jpg" id="logo-img" alt="Logo" onerror="this.onerror=null; this.src='logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('logo-fallback').style.display='inline-block';}">
-      <div id="logo-fallback">CR</div>
-      <span id="logo-text">CLOUD RIDER</span>
-    </a>
-    <button id="hamburger" onclick="toggleMobileMenu()">
-      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-    </button>
-    <div id="nav-menu">
-      <div class="nav-row nav-row-1" id="nav-cats"></div>
-      <div class="nav-row nav-row-2">
-        <div class="nm-drop" id="genre-drop-wrap">
-          <button class="nm" id="btn-genres-drop">Géneros ▾</button>
-          <div class="dmenu scrollable" id="drop-genres"></div>
+    <header>
+        <div class="navbar">
+            <div class="logo-container">
+                <img src="logotipo.jpg" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
+                <div class="logo-text">Cloud Rider</div>
+            </div>
+            <nav>
+                <div class="catalog-tabs" id="catalog-tabs">
+                    <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
+                    <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
+                    <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
+                    <button onclick="cambiarCatalogo('novelas.csv')">Novelas</button>
+                    <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
+                    <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
+                    <button onclick="cambiarCatalogo('animados.csv')">Animados</button>
+                </div>
+            </nav>
         </div>
-        <div class="nm-drop" id="year-drop-wrap">
-          <button class="nm" id="btn-years-drop">Año ▾</button>
-          <div class="dmenu scrollable" id="drop-years"></div>
+    </header>
+
+    <main class="container">
+        <div class="section-header">
+            <h2 class="section-title" id="catalog-title">Cargando...</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar por título...">
+            </div>
         </div>
-        <div id="active-filters"></div>
-      </div>
-    </div>
-    <div id="nav-right">
-      <input type="text" id="srch" placeholder="Buscar...">
-      <button id="cart-btn" onclick="toggleCart()">
-        Pedir <span id="cart-count">0</span>
-      </button>
-    </div>
-  </nav>
 
-  <div id="sbar">
-    <div class="sc cy" id="stat-total">Títulos: <b>0</b></div>
-    <div class="sc pk" id="stat-filtered" style="display:none">Encontrados: <b>0</b></div>
-    <select id="srt" onchange="handleSortChange()">
-      <option value="abc">A - Z</option>
-      <option value="rat">Puntuación</option>
-      <option value="new">Más recientes</option>
-      <option value="old">Más antiguos</option>
-    </select>
-  </div>
+        <div class="series-grid" id="grid-container">
+            <div class="status-message">Iniciando...</div>
+        </div>
+    </main>
 
-  <main id="grid"></main>
+    <input type="file" id="local-file-picker" accept=".csv">
 
-  <div id="pager"></div>
+    <footer>
+        <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
+    </footer>
 
-  <div id="detail">
-    <div id="det-backdrop"></div>
-    <div id="det-nav">
-      <button id="det-back" onclick="closeDetail()">&larr; Volver</button>
-      <div id="det-tit-nav"></div>
-      <button id="det-add-cart" onclick="handleDetailCartClick()">Añadir al pedido</button>
-    </div>
-    <div id="det-body">
-      <div id="det-poster"></div>
-      <div id="det-info">
-        <h2 id="det-name"></h2>
-        <div id="det-tagline"></div>
-        <div id="det-chips"></div>
-        <div id="det-overview"></div>
-        <div id="det-genres"></div>
-        <div id="det-seasons"></div>
-        <div id="det-acts"></div>
-        <div id="det-trailer"></div>
-      </div>
-    </div>
-    <div id="det-cast-section" style="display:none">
-      <h3>Reparto Principal</h3>
-      <div id="det-cast"></div>
-    </div>
-  </div>
+    <script>
+        let datosActuales = [];
+        let archivoActual = 'series.csv';
 
-  <div id="cart-overlay" onclick="toggleCart()"></div>
-  <div id="cart-panel">
-    <div id="cart-head">
-      <h2>Tu Pedido</h2>
-      <button id="cart-close" onclick="toggleCart()">&times;</button>
-    </div>
-    <div id="cart-items"></div>
-    <div id="cart-foot">
-      <div id="cart-count-label">Items seleccionados: <b id="cart-foot-count">0</b></div>
-      <button id="cart-send" onclick="sendCartWhatsApp()">
-        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.176.001 6.163 1.237 8.411 3.488 2.248 2.25 3.481 5.237 3.48 8.413-.003 6.597-5.339 11.946-11.89 11.946-2.005-.001-3.973-.504-5.714-1.463L0 24zm6.59-4.846c1.6.95 3.197 1.451 4.794 1.451 5.37 0 9.739-4.368 9.742-9.741.002-2.605-1.01-5.053-2.85-6.895-1.84-1.842-4.29-2.853-6.896-2.854-5.37 0-9.74 4.369-9.743 9.744-.001 1.715.46 3.393 1.332 4.882l-.99 3.615 3.701-.971zM17.91 14.65c-.328-.164-1.945-.96-2.244-1.07-.3-.109-.517-.164-.734.164-.218.328-.844 1.07-1.034 1.288-.19.218-.38.245-.71.082-.328-.164-1.386-.51-2.64-1.632-.976-.87-1.635-1.947-1.826-2.275-.19-.328-.02-.505.144-.668.148-.147.328-.382.493-.574.164-.192.219-.328.328-.547.11-.219.055-.411-.027-.574-.082-.164-.734-1.77-1.006-2.43-.265-.64-.537-.552-.734-.562-.19-.01-.41-.01-.628-.01-.218 0-.573.082-.873.411-.3.328-1.147 1.122-1.147 2.733 0 1.61 1.173 3.167 1.337 3.387.164.22 2.307 3.523 5.59 4.943.78.337 1.39.54 1.864.69.784.249 1.497.214 2.061.13.629-.094 1.945-.795 2.217-1.56.273-.767.273-1.424.19-1.56-.081-.136-.3-.218-.627-.382z"/></svg>
-        Enviar por WhatsApp
-      </button>
-    </div>
-  </div>
+        document.addEventListener("DOMContentLoaded", () => {
+            cambiarCatalogo('series.csv');
+            document.getElementById('search-input').addEventListener('input', filtrarContenido);
+            document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
+        });
 
-  <button id="bktop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&uarr;</button>
-  <div id="prog-bar"><div id="prog-fill"></div></div>
+        function cambiarCatalogo(nombreArchivo) {
+            archivoActual = nombreArchivo;
+            
+            document.querySelectorAll('.catalog-tabs button').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(nombreArchivo)) {
+                    btn.classList.add('active');
+                    document.getElementById('catalog-title').innerText = btn.innerText;
+                }
+            });
 
-  <script src="script.js" defer></script>
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '<div class="status-message">Buscando base de datos multimedia...</div>';
+
+            fetch(nombreArchivo)
+                .then(response => {
+                    if (!response.ok) throw new Error("No se pudo cargar " + nombreArchivo);
+                    return response.text();
+                })
+                .then(texto => {
+                    procesarCSV(texto);
+                })
+                .catch(error => {
+                    container.innerHTML = `
+                        <div class="status-message" style="color: var(--pink-neon);">
+                            <p>Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</p>
+                            <label for="local-file-picker" class="btn-retry-local">O cargar "${nombreArchivo}" manualmente desde tu PC</label>
+                        </div>`;
+                    console.error(error);
+                });
+        }
+
+        function cargarArchivoLocal(evt) {
+            const archivo = evt.target.files[0];
+            if (!archivo) return;
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                procesarCSV(e.target.result);
+            };
+            lector.readAsText(archivo, 'UTF-8');
+        }
+
+        function procesarCSV(texto) {
+            let lineas = [];
+            if (archivoActual === 'animados.csv' && texto.includes('\t')) {
+                let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
+                lineas = textoLimpio.split('\n');
+            } else {
+                lineas = texto.split(/\r?\n/);
+            }
+
+            if (lineas.length < 2) return;
+
+            let separador = ';';
+            if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) {
+                separador = '\t';
+            }
+
+            const cabeceras = lineas[0].replace(/"/g, '').split(separador).map(c => c.trim().toLowerCase());
+            datosActuales = [];
+
+            for (let i = 1; i < lineas.length; i++) {
+                if (!lineas[i].trim()) continue;
+                
+                let fila = lineas[i];
+                if (fila.startsWith('"') && fila.endsWith('"')) {
+                    fila = fila.substring(1, fila.length - 1);
+                }
+
+                const columnas = fila.split(separador);
+                const obj = {};
+                
+                cabeceras.forEach((cabecera, index) => {
+                    obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
+                });
+
+                const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
+                const anioFinal = obj.anio || "N/A";
+                const imagenFinal = obj.link_imagen || obj.poster_url || ""; 
+                const scoreFinal = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
+                const tempFinal = obj.temporadas || "1";
+                const capFinal = obj.capitulos || obj.episodios || "0";
+                const sinopsisFinal = obj.sinopsis || "No hay sinopsis disponible para este título.";
+                const generosFinal = obj.generos || "";
+
+                datosActuales.push({
+                    titulo: tituloFinal,
+                    anio: anioFinal,
+                    imagen: imagenFinal, 
+                    imdb: scoreFinal,
+                    temporadas: tempFinal,
+                    capitulos: capFinal,
+                    sinopsis: sinopsisFinal,
+                    generos: generosFinal
+                });
+            }
+
+            filtrarContenido();
+        }
+
+        function filtrarContenido() {
+            const busqueda = document.getElementById('search-input').value.toLowerCase();
+            const filtrados = datosActuales.filter(item => 
+                item.titulo.toLowerCase().includes(busqueda)
+            );
+            renderizarGrid(filtrados);
+        }
+
+        function renderizarGrid(lista) {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+
+            if (lista.length === 0) {
+                container.innerHTML = `<div class="status-message">No se encontraron resultados en esta sección.</div>`;
+                return;
+            }
+
+            lista.forEach(item => {
+                const esJuego = archivoActual === 'juegos.csv';
+                const esPeli = archivoActual === 'peliculas.csv';
+                
+                let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
+                if (esJuego || esPeli) {
+                    infoBadge = `Año: ${item.anio.split(' ')[0]}`;
+                }
+
+                const ratingBadge = (item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0') ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : '';
+
+                const cardContainer = document.createElement('div');
+                cardContainer.className = 'card-container';
+                
+                cardContainer.addEventListener('click', () => {
+                    cardContainer.classList.toggle('flipped');
+                });
+
+                cardContainer.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="thumbnail-container">
+                                ${ratingBadge}
+                                <span class="badge-info">${infoBadge}</span>
+                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text='+encodeURIComponent(item.titulo)">
+                            </div>
+                            <div class="series-info">
+                                <div class="series-title" title="${item.titulo}">${item.titulo}</div>
+                                <div class="series-meta">${item.anio}</div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="back-title">${item.titulo}</div>
+                            <div class="back-synopsis">${item.sinopsis}</div>
+                            <div class="back-footer">
+                                <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(cardContainer);
+            });
+        }
+    </script>
 </body>
 </html>
