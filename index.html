@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Online Global</title>
+    <title>GatonPlay - Catálogo Global</title>
     <style>
         /* Estilos Base - Modo Oscuro Premium */
         * {
@@ -119,38 +119,63 @@
             width: 220px;
         }
 
+        /* Grid de Tarjetas */
         .series-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
         }
 
-        .series-card {
-            background-color: #1f1f1f;
+        /* === EFECTO DE GIRO 3D (FLIP CARD) === */
+        .card-container {
+            background-color: transparent;
+            height: 380px;
+            perspective: 1000px; /* Crea el espacio 3D */
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        /* Cuando pasas el mouse (o tocas en móvil), gira */
+        .card-container:hover .card-inner,
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
             border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        .series-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        /* Lado de Enfrente (Portada) */
+        .card-front {
+            background-color: #1f1f1f;
+            color: white;
         }
 
         .thumbnail-container {
             position: relative;
             width: 100%;
-            padding-top: 140%;
+            height: 290px;
             background-color: #2a2a2a;
         }
 
         .thumbnail-container img {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -166,6 +191,7 @@
             font-size: 11px;
             font-weight: bold;
             border-radius: 3px;
+            z-index: 2;
         }
 
         .badge-info {
@@ -179,13 +205,16 @@
             font-weight: 500;
             border-radius: 3px;
             border: 1px solid #444;
+            z-index: 2;
         }
 
         .series-info {
             padding: 12px;
+            background-color: #1f1f1f;
+            height: 90px;
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
+            justify-content: center;
         }
 
         .series-title {
@@ -200,7 +229,52 @@
         .series-meta {
             font-size: 12px;
             color: #aaaaaa;
-            margin-top: auto;
+        }
+
+        /* Lado de Atrás (Sinopsis) */
+        .card-back {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            border: 2px solid #e50914;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        .back-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #e50914;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .back-synopsis {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #dddddd;
+            overflow-y: auto; /* Permite scroll interno si la sinopsis es muy larga */
+            flex-grow: 1;
+            padding-right: 5px;
+        }
+
+        /* Personalizar scrollbar de la sinopsis */
+        .back-synopsis::-webkit-scrollbar { width: 4px; }
+        .back-synopsis::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
+
+        .back-footer {
+            font-size: 11px;
+            color: #888;
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px solid #222;
         }
 
         .status-message {
@@ -227,7 +301,9 @@
             .section-header { flex-direction: column; align-items: flex-start; }
             .search-box { width: 100%; }
             .search-box input { width: 100%; }
-            .series-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+            .series-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .card-container { height: 320px; }
+            .thumbnail-container { height: 230px; }
         }
     </style>
 </head>
@@ -305,38 +381,60 @@
         }
 
         function procesarCSV(texto) {
-            const lineas = texto.split(/\r?\n/);
+            // Dividir líneas, controlando variaciones del archivo animados.csv
+            let lineas = [];
+            if (archivoActual === 'animados.csv' && texto.includes('\t')) {
+                // Limpieza especial para el formato tabulado de animados.csv
+                let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
+                lineas = textoLimpio.split('\n');
+            } else {
+                lineas = texto.split(/\r?\n/);
+            }
+
             if (lineas.length < 2) return;
 
-            // Mapeo flexible de cabeceras
-            const cabeceras = lineas[0].split(';').map(c => c.trim().toLowerCase());
+            // Detectar cabecera y separador
+            let separador = ';';
+            if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) {
+                separador = '\t';
+            }
+
+            const cabeceras = lineas[0].replace(/"/g, '').split(separador).map(c => c.trim().toLowerCase());
             datosActuales = [];
 
             for (let i = 1; i < lineas.length; i++) {
                 if (!lineas[i].trim()) continue;
                 
-                const columnas = lineas[i].split(';');
+                let fila = lineas[i];
+                if (fila.startsWith('"') && fila.endsWith('"')) {
+                    fila = fila.substring(1, fila.length - 1);
+                }
+
+                const columnas = fila.split(separador);
                 const obj = {};
                 
                 cabeceras.forEach((cabecera, index) => {
                     obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
                 });
 
-                // Extracción inteligente tolerante a variaciones de columnas
                 const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
-                const anioFinal = obj.anio || obj.anio_lanzamiento || "N/A";
-                const imagenFinal = obj.link_imagen || obj.poster_url || "";
+                const anioFinal = obj.anio || "N/A";
+                const宣imagenFinal = obj.link_imagen || obj.poster_url || "";
                 const scoreFinal = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
                 const tempFinal = obj.temporadas || "1";
                 const capFinal = obj.capitulos || obj.episodios || "0";
+                const sinopsisFinal = obj.sinopsis || "No hay sinopsis disponible para este título.";
+                const generosFinal = obj.generos || "";
 
                 datosActuales.push({
                     titulo: tituloFinal,
                     anio: anioFinal,
-                    imagen: imagenFinal,
+                    imagen:宣imagenFinal,
                     imdb: scoreFinal,
                     temporadas: tempFinal,
-                    capitulos: capFinal
+                    capitulos: capFinal,
+                    sinopsis: sinopsisFinal,
+                    generos: generosFinal
                 });
             }
 
@@ -361,31 +459,49 @@
             }
 
             lista.forEach(item => {
-                const tarjeta = document.createElement('div');
-                tarjeta.className = 'series-card';
-                
                 const esJuego = archivoActual === 'juegos.csv';
                 const esPeli = archivoActual === 'peliculas.csv';
                 
                 let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
                 if (esJuego || esPeli) {
-                    infoBadge = `Año: ${item.anio.split(' ')[0]}`; // Solo el primer año limpio
+                    infoBadge = `Año: ${item.anio.split(' ')[0]}`;
                 }
 
                 const ratingBadge = (item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0') ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : '';
 
-                tarjeta.innerHTML = `
-                    <div class="thumbnail-container">
-                        ${ratingBadge}
-                        <span class="badge-info">${infoBadge}</span>
-                        <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/222/fff?text=Sin+Imagen'">
-                    </div>
-                    <div class="series-info">
-                        <div class="series-title" title="${item.titulo}">${item.titulo}</div>
-                        <div class="series-meta">${item.anio}</div>
+                // Contenedor de la tarjeta 3D
+                const cardContainer = document.createElement('div');
+                cardContainer.className = 'card-container';
+                
+                // Permitir click para dispositivos móviles (giro táctil)
+                cardContainer.addEventListener('click', () => {
+                    cardContainer.classList.toggle('flipped');
+                });
+
+                cardContainer.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="thumbnail-container">
+                                ${ratingBadge}
+                                <span class="badge-info">${infoBadge}</span>
+                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/222/fff?text='+encodeURIComponent(item.titulo)">
+                            </div>
+                            <div class="series-info">
+                                <div class="series-title" title="${item.titulo}">${item.titulo}</div>
+                                <div class="series-meta">${item.anio}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-back">
+                            <div class="back-title">${item.titulo}</div>
+                            <div class="back-synopsis">${item.sinopsis}</div>
+                            <div class="back-footer">
+                                <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
+                            </div>
+                        </div>
                     </div>
                 `;
-                container.appendChild(tarjeta);
+                container.appendChild(cardContainer);
             });
         }
     </script>
