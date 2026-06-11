@@ -1,67 +1,567 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud Rider &mdash; Cat&aacute;logo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap\" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{\r
-  --cyan:#00d4ff;--pink:#ff1493;--dark-cyan:#00a8cc;\r
-  --bg:#080810;--s1:#0e0e18;--s2:#14141f;--s3:#1c1c2a;\r
-  --txt:#eaeaea;--muted:#777;--border:#1e1e2e;\r
-  --green:#1db954;--amber:#f59e0b;\r
-  --fh:'Bebas Neue',sans-serif;--fb:'Barlow',sans-serif;\r
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-button,input,select,textarea{font-family:inherit;background:none;border:none;color:inherit}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Rider - Catálogo Global</title>
+    <style>
+        /* ==========================================
+           🎨 PALETA DE COLORES NEÓN (CLOUD RIDER)
+           ========================================== */
+        :root {
+            --cyan-neon: #00d4ff;   /* Cian brillante del logo */
+            --pink-neon: #ff1493;   /* Rosa eléctrico del logo */
+            --bg-dark: #080810;     /* Fondo ultra oscuro azulado */
+            --card-bg: #14141f;     /* Gris azulado para tarjetas */
+            --card-back-bg: #0e0e18;/* Reverso de tarjetas */
+            --text-main: #eaeaea;   /* Texto principal */
+        }
 
-/* Header */
-.cr-header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(8,8,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
-.cr-brand{display:flex;align-items:center;gap:0.75rem;cursor:pointer}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-/* 🐺 Ajuste de tamaño y protección para que tu Logo cargue de cualquier formato */
-.cr-logo-img{width:42px;height:42px;object-fit:contain}
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding-bottom: 50px;
+        }
 
-.cr-title{font-family:var(--fh);font-size:1.85rem;letter-spacing:1px;background:linear-gradient(90deg, var(--cyan), var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:0.25rem}
+        header {
+            background-color: #000000;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--cyan-neon); /* Línea cian de separación */
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+        }
 
-.cr-nav{display:flex;align-items:center;gap:1.5rem}
-.cr-nav-item{font-size:0.95rem;font-weight:500;color:var(--muted);transition:color 0.25s,transform 0.25s;position:relative;padding:0.25rem 0}
-.cr-nav-item:hover{color:var(--txt)}
-.cr-nav-item.active{color:var(--cyan);font-weight:600}
-.cr-nav-item.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--cyan);border-radius:2px}
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-.cr-search-bar{position:relative;display:flex;align-items:center;background:var(--s1);border:1px solid var(--border);border-radius:20px;padding:0.4rem 1rem;width:240px;transition:all 0.3s}
-.cr-search-bar:focus-within{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,212,255,0.15);width:280px}
-.cr-search-bar input{width:100%;font-size:0.87rem;outline:none}
-.cr-search-bar svg{width:16px;height:16px;fill:var(--muted);margin-left:0.5rem;pointer-events:none}
+        /* Contenedor del Logo con el Lobo */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-/* El resto de tus estilos originales de tarjetas, carrusel y filtros se mantienen idénticos abajo */
-</style>
+        /* Espacio para la imagen real de tu logo en GitHub */
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .catalog-tabs {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 0;
+        }
+
+        .catalog-tabs::-webkit-scrollbar { height: 4px; }
+        .catalog-tabs::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+        .catalog-tabs button {
+            background-color: #1a1a26;
+            border: 1px solid #33334d;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .catalog-tabs button:hover, .catalog-tabs button.active {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            border-left: 4px solid var(--pink-neon); /* Detalle rosa */
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #141424;
+            border: 1px solid #33334d;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            padding: 3px;
+            font-size: 14px;
+            width: 220px;
+        }
+
+        /* ==========================================
+           🎴 GRID Y EFECTO DE GIRO (FLIP CARDS)
+           ========================================== */
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .card-container {
+            background-color: transparent;
+            height: 380px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-container:hover .card-inner,
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        /* Cara de adelante */
+        .card-front {
+            background-color: var(--card-bg);
+            color: white;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            height: 290px;
+            background-color: #1f1f33;
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-imdb {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #f5c518;
+            color: #000000;
+            padding: 3px 6px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 3px;
+            z-index: 2;
+        }
+
+        .badge-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: var(--cyan-neon); /* Texto del badge en cian */
+            padding: 3px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 3px;
+            border: 1px solid var(--cyan-neon);
+            z-index: 2;
+        }
+
+        .series-info {
+            padding: 12px;
+            background-color: var(--card-bg);
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .series-title {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .series-meta {
+            font-size: 12px;
+            color: #8fa0b3;
+            text-align: left;
+        }
+
+        /* Cara de atrás */
+        .card-back {
+            background-color: var(--card-back-bg);
+            color: #ffffff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            border: 2px solid var(--pink-neon); /* Resplandor rosa al girar */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
+        }
+
+        .back-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--cyan-neon); /* Título trasero en cian */
+            margin-bottom: 8px;
+            border-bottom: 1px solid #22223b;
+            padding-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .back-synopsis {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #cccccc;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 5px;
+        }
+
+        .back-synopsis::-webkit-scrollbar { width: 4px; }
+        .back-synopsis::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+        .back-footer {
+            font-size: 11px;
+            color: #6272a4;
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px solid #22223b;
+        }
+
+        .status-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #6272a4;
+            font-size: 16px;
+        }
+
+        .btn-retry-local {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        #local-file-picker { display: none; }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #040408;
+            margin-top: 50px;
+            border-top: 1px solid #1a1a26;
+            color: #44475a;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; }
+            .catalog-tabs { width: 100%; justify-content: flex-start; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+            .search-box { width: 100%; }
+            .search-box input { width: 100%; }
+            .series-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .card-container { height: 320px; }
+            .thumbnail-container { height: 230px; }
+        }
+    </style>
 </head>
 <body>
 
-  <header class="cr-header">
-    <div class="cr-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-      <img src="logo.png" alt="Cloud Rider Logo" class="cr-logo-img" onerror="this.onerror=null; this.src='logo.jpg'; this.onerror=function(){this.style.display='none'; document.getElementById('logo-fallback').style.display='block';}">
-      <div id="logo-fallback" style="display:none; font-family:var(--fh); font-size:1.8rem; color:var(--cyan); font-weight:bold; margin-right:5px;">CR</div>
-      <h1 class="cr-title">Cloud Rider</h1>
-    </div>
-    
-    <div class="cr-nav-container">
-      <nav class="cr-nav" id="main-nav-tabs">
-        </nav>
-    </div>
+    <header>
+        <div class="navbar">
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
+                <div class="logo-text">Cloud Rider</div>
+            </div>
+            <nav>
+                <div class="catalog-tabs" id="catalog-tabs">
+                    <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
+                    <button onclick="cambiarCatalogo('animes.csv')">Anime</button>
+                    <button onclick="cambiarCatalogo('doramas.csv')">Dorama</button>
+                    <button onclick="cambiarCatalogo('novelas.csv')">Novelas</button>
+                    <button onclick="cambiarCatalogo('juegos.csv')">Juegos PC</button>
+                    <button onclick="cambiarCatalogo('peliculas.csv')">Películas</button>
+                    <button onclick="cambiarCatalogo('animados.csv')">Animados</button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-    <div class="cr-search-bar">
-      <input type="text" id="global-search" placeholder="Buscar títulos, géneros...">
-      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-    </div>
-  </header>
+    <main class="container">
+        <div class="section-header">
+            <h2 class="section-title" id="catalog-title">Cargando...</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar por título...">
+            </div>
+        </div>
 
-  </body>
+        <div class="series-grid" id="grid-container">
+            <div class="status-message">Iniciando...</div>
+        </div>
+    </main>
+
+    <input type="file" id="local-file-picker" accept=".csv">
+
+    <footer>
+        <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
+    </footer>
+
+    <script>
+        let datosActuales = [];
+        let archivoActual = 'series.csv';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            cambiarCatalogo('series.csv');
+            document.getElementById('search-input').addEventListener('input', filtrarContenido);
+            document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
+        });
+
+        function cambiarCatalogo(nombreArchivo) {
+            archivoActual = nombreArchivo;
+            
+            document.querySelectorAll('.catalog-tabs button').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(nombreArchivo)) {
+                    btn.classList.add('active');
+                    document.getElementById('catalog-title').innerText = btn.innerText;
+                }
+            });
+
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '<div class="status-message">Buscando base de datos multimedia...</div>';
+
+            fetch(nombreArchivo)
+                .then(response => {
+                    if (!response.ok) throw new Error("No se pudo cargar " + nombreArchivo);
+                    return response.text();
+                })
+                .then(texto => {
+                    procesarCSV(texto);
+                })
+                .catch(error => {
+                    container.innerHTML = `
+                        <div class="status-message" style="color: var(--pink-neon);">
+                            <p>Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</p>
+                            <label for="local-file-picker" class="btn-retry-local">O cargar "${nombreArchivo}" manualmente desde tu PC</label>
+                        </div>`;
+                    console.error(error);
+                });
+        }
+
+        function cargarArchivoLocal(evt) {
+            const archivo = evt.target.files[0];
+            if (!archivo) return;
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                procesarCSV(e.target.result);
+            };
+            lector.readAsText(archivo, 'UTF-8');
+        }
+
+        function procesarCSV(texto) {
+            let lineas = [];
+            if (archivoActual === 'animados.csv' && texto.includes('\t')) {
+                let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
+                lineas = textoLimpio.split('\n');
+            } else {
+                lineas = texto.split(/\r?\n/);
+            }
+
+            if (lineas.length < 2) return;
+
+            let separador = ';';
+            if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) {
+                separador = '\t';
+            }
+
+            const cabeceras = lineas[0].replace(/"/g, '').split(separador).map(c => c.trim().toLowerCase());
+            datosActuales = [];
+
+            for (let i = 1; i < lineas.length; i++) {
+                if (!lineas[i].trim()) continue;
+                
+                let fila = lineas[i];
+                if (fila.startsWith('"') && fila.endsWith('"')) {
+                    fila = fila.substring(1, fila.length - 1);
+                }
+
+                const columnas = fila.split(separador);
+                const obj = {};
+                
+                cabeceras.forEach((cabecera, index) => {
+                    obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
+                });
+
+                const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
+                const anioFinal = obj.anio || "N/A";
+                const imagenFinal = obj.link_imagen || obj.poster_url || ""; 
+                const scoreFinal = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
+                const tempFinal = obj.temporadas || "1";
+                const capFinal = obj.capitulos || obj.episodios || "0";
+                const sinopsisFinal = obj.sinopsis || "No hay sinopsis disponible para este título.";
+                const generosFinal = obj.generos || "";
+
+                datosActuales.push({
+                    titulo: tituloFinal,
+                    anio: anioFinal,
+                    imagen: imagenFinal, 
+                    imdb: scoreFinal,
+                    temporadas: tempFinal,
+                    capitulos: capFinal,
+                    sinopsis: sinopsisFinal,
+                    generos: generosFinal
+                });
+            }
+
+            filtrarContenido();
+        }
+
+        function filtrarContenido() {
+            const busqueda = document.getElementById('search-input').value.toLowerCase();
+            const filtrados = datosActuales.filter(item => 
+                item.titulo.toLowerCase().includes(busqueda)
+            );
+            renderizarGrid(filtrados);
+        }
+
+        function renderizarGrid(lista) {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+
+            if (lista.length === 0) {
+                container.innerHTML = `<div class="status-message">No se encontraron resultados en esta sección.</div>`;
+                return;
+            }
+
+            lista.forEach(item => {
+                const esJuego = archivoActual === 'juegos.csv';
+                const esPeli = archivoActual === 'peliculas.csv';
+                
+                let infoBadge = `T${item.temporadas} • C${item.capitulos}`;
+                if (esJuego || esPeli) {
+                    infoBadge = `Año: ${item.anio.split(' ')[0]}`;
+                }
+
+                const ratingBadge = (item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0') ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : '';
+
+                const cardContainer = document.createElement('div');
+                cardContainer.className = 'card-container';
+                
+                cardContainer.addEventListener('click', () => {
+                    cardContainer.classList.toggle('flipped');
+                });
+
+                cardContainer.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="thumbnail-container">
+                                ${ratingBadge}
+                                <span class="badge-info">${infoBadge}</span>
+                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text='+encodeURIComponent(item.titulo)">
+                            </div>
+                            <div class="series-info">
+                                <div class="series-title" title="${item.titulo}">${item.titulo}</div>
+                                <div class="series-meta">${item.anio}</div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="back-title">${item.titulo}</div>
+                            <div class="back-synopsis">${item.sinopsis}</div>
+                            <div class="back-footer">
+                                <div><strong>Géneros:</strong> ${item.generos || 'N/A'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(cardContainer);
+            });
+        }
+    </script>
+</body>
 </html>
