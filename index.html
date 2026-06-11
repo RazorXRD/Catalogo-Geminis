@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GatonPlay - Catálogo Global</title>
+    <title>Cloud Rider - Catálogo Global</title>
     <style>
         /* ==========================================
-           🎨 ESTILOS BASE (MODO OSCURO PREMIUM)
+           🎨 PALETA DE COLORES NEÓN (CLOUD RIDER)
            ========================================== */
+        :root {
+            --cyan-neon: #00d4ff;   /* Cian brillante del logo */
+            --pink-neon: #ff1493;   /* Rosa eléctrico del logo */
+            --bg-dark: #080810;     /* Fondo ultra oscuro azulado */
+            --card-bg: #14141f;     /* Gris azulado para tarjetas */
+            --card-back-bg: #0e0e18;/* Reverso de tarjetas */
+            --text-main: #eaeaea;   /* Texto principal */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,8 +25,8 @@
         }
 
         body {
-            background-color: #141414; /* Color de fondo de la web */
-            color: #ffffff;            /* Color del texto general */
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             padding-bottom: 50px;
         }
 
@@ -26,7 +35,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 2px solid #e50914; /* Línea roja estilo Netflix */
+            border-bottom: 2px solid var(--cyan-neon); /* Línea cian de separación */
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
         }
 
         .navbar {
@@ -40,15 +50,29 @@
             gap: 15px;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e50914;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        /* Contenedor del Logo con el Lobo */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .logo span { color: #ffffff; }
+        /* Espacio para la imagen real de tu logo en GitHub */
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--cyan-neon), var(--pink-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         .catalog-tabs {
             display: flex;
@@ -63,8 +87,8 @@
         .catalog-tabs::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
         .catalog-tabs button {
-            background-color: #222;
-            border: 1px solid #444;
+            background-color: #1a1a26;
+            border: 1px solid #33334d;
             color: #ffffff;
             font-size: 14px;
             font-weight: 600;
@@ -75,9 +99,10 @@
         }
 
         .catalog-tabs button:hover, .catalog-tabs button.active {
-            background-color: #e50914; /* Color del botón activo */
-            border-color: #e50914;
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
+            border-color: transparent;
             color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
         }
 
         .container {
@@ -97,16 +122,17 @@
 
         .section-title {
             font-size: 22px;
-            border-left: 4px solid #e50914;
+            border-left: 4px solid var(--pink-neon); /* Detalle rosa */
             padding-left: 10px;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .search-box {
             display: flex;
             align-items: center;
-            background-color: #222;
-            border: 1px solid #444;
+            background-color: #141424;
+            border: 1px solid #33334d;
             padding: 6px 12px;
             border-radius: 4px;
         }
@@ -122,7 +148,7 @@
         }
 
         /* ==========================================
-           🎴 GRID Y EFECTO DE GIRO 3D (FLIP CARD)
+           🎴 GRID Y EFECTO DE GIRO (FLIP CARDS)
            ========================================== */
         .series-grid {
             display: grid;
@@ -133,7 +159,7 @@
         .card-container {
             background-color: transparent;
             height: 380px;
-            perspective: 1000px; /* Crea la perspectiva 3D */
+            perspective: 1000px;
             cursor: pointer;
         }
 
@@ -146,7 +172,6 @@
             transform-style: preserve-3d;
         }
 
-        /* Gira la tarjeta al pasar el mouse (PC) o añadir la clase .flipped (Móvil) */
         .card-container:hover .card-inner,
         .card-container.flipped .card-inner {
             transform: rotateY(180deg);
@@ -162,12 +187,12 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
-        /* 🔹 Cara Frontal (Portada) */
+        /* Cara de adelante */
         .card-front {
-            background-color: #1f1f1f; /* Color de fondo de la tarjeta */
+            background-color: var(--card-bg);
             color: white;
         }
 
@@ -175,7 +200,7 @@
             position: relative;
             width: 100%;
             height: 290px;
-            background-color: #2a2a2a;
+            background-color: #1f1f33;
         }
 
         .thumbnail-container img {
@@ -188,7 +213,7 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background-color: #f5c518; /* Amarillo IMDb */
+            background-color: #f5c518;
             color: #000000;
             padding: 3px 6px;
             font-size: 11px;
@@ -201,19 +226,19 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: rgba(0, 0, 0, 0.75);
-            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: var(--cyan-neon); /* Texto del badge en cian */
             padding: 3px 6px;
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 600;
             border-radius: 3px;
-            border: 1px solid #444;
+            border: 1px solid var(--cyan-neon);
             z-index: 2;
         }
 
         .series-info {
             padding: 12px;
-            background-color: #1f1f1f;
+            background-color: var(--card-bg);
             height: 90px;
             display: flex;
             flex-direction: column;
@@ -232,29 +257,30 @@
 
         .series-meta {
             font-size: 12px;
-            color: #aaaaaa;
+            color: #8fa0b3;
             text-align: left;
         }
 
-        /* 🔸 Cara Posterior (Sinopsis y Detalles) */
+        /* Cara de atrás */
         .card-back {
-            background-color: #1a1a1a;
+            background-color: var(--card-back-bg);
             color: #ffffff;
             transform: rotateY(180deg);
             padding: 20px;
-            border: 2px solid #e50914; /* Borde rojo que resalta al girar */
+            border: 2px solid var(--pink-neon); /* Resplandor rosa al girar */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             text-align: left;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
         }
 
         .back-title {
             font-size: 15px;
             font-weight: bold;
-            color: #e50914;
+            color: var(--cyan-neon); /* Título trasero en cian */
             margin-bottom: 8px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #22223b;
             padding-bottom: 5px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -264,34 +290,33 @@
         .back-synopsis {
             font-size: 13px;
             line-height: 1.5;
-            color: #dddddd;
-            overflow-y: auto; /* Scrollbar interno si el texto es largo */
+            color: #cccccc;
+            overflow-y: auto;
             flex-grow: 1;
             padding-right: 5px;
         }
 
         .back-synopsis::-webkit-scrollbar { width: 4px; }
-        .back-synopsis::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
+        .back-synopsis::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
         .back-footer {
             font-size: 11px;
-            color: #888;
+            color: #6272a4;
             margin-top: 10px;
             padding-top: 5px;
-            border-top: 1px solid #222;
+            border-top: 1px solid #22223b;
         }
 
         .status-message {
             grid-column: 1 / -1;
             text-align: center;
             padding: 40px;
-            color: #888;
+            color: #6272a4;
             font-size: 16px;
         }
 
-        /* Botón de contingencia local */
         .btn-retry-local {
-            background-color: #e50914;
+            background: linear-gradient(135deg, var(--cyan-neon), var(--pink-neon));
             color: white;
             border: none;
             padding: 8px 16px;
@@ -307,14 +332,13 @@
         footer {
             text-align: center;
             padding: 30px;
-            background-color: #0b0b0b;
+            background-color: #040408;
             margin-top: 50px;
-            border-top: 1px solid #222;
-            color: #666;
+            border-top: 1px solid #1a1a26;
+            color: #44475a;
             font-size: 14px;
         }
 
-        /* 📱 RESPONSIVE (CELULARES Y TABLETS) */
         @media (max-width: 768px) {
             .navbar { flex-direction: column; }
             .catalog-tabs { width: 100%; justify-content: flex-start; }
@@ -331,7 +355,10 @@
 
     <header>
         <div class="navbar">
-            <div class="logo">GatonPlay<span>Catálogo</span></div>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00d4ff/fff?text=CR'">
+                <div class="logo-text">Cloud Rider</div>
+            </div>
             <nav>
                 <div class="catalog-tabs" id="catalog-tabs">
                     <button class="active" onclick="cambiarCatalogo('series.csv')">Series</button>
@@ -362,7 +389,7 @@
     <input type="file" id="local-file-picker" accept=".csv">
 
     <footer>
-        <p>&copy; 2026 Catálogo de Medios Global en Vercel</p>
+        <p>&copy; 2026 Catálogo de Medios Global &bull; Cloud Rider</p>
     </footer>
 
     <script>
@@ -399,7 +426,7 @@
                 })
                 .catch(error => {
                     container.innerHTML = `
-                        <div class="status-message" style="color: #e50914;">
+                        <div class="status-message" style="color: var(--pink-neon);">
                             <p>Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</p>
                             <label for="local-file-picker" class="btn-retry-local">O cargar "${nombreArchivo}" manualmente desde tu PC</label>
                         </div>`;
@@ -419,7 +446,6 @@
 
         function procesarCSV(texto) {
             let lineas = [];
-            // Tratamiento especial para el archivo tabulado de animados.csv
             if (archivoActual === 'animados.csv' && texto.includes('\t')) {
                 let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
                 lineas = textoLimpio.split('\n');
@@ -452,7 +478,6 @@
                     obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
                 });
 
-                // Extracción unificada y mapeo flexible de variables
                 const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
                 const anioFinal = obj.anio || "N/A";
                 const imagenFinal = obj.link_imagen || obj.poster_url || ""; 
@@ -508,7 +533,6 @@
                 const cardContainer = document.createElement('div');
                 cardContainer.className = 'card-container';
                 
-                // Evento táctil para teléfonos móviles
                 cardContainer.addEventListener('click', () => {
                     cardContainer.classList.toggle('flipped');
                 });
@@ -519,7 +543,7 @@
                             <div class="thumbnail-container">
                                 ${ratingBadge}
                                 <span class="badge-info">${infoBadge}</span>
-                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/222/fff?text='+encodeURIComponent(item.titulo)">
+                                <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/250x350/141424/fff?text='+encodeURIComponent(item.titulo)">
                             </div>
                             <div class="series-info">
                                 <div class="series-title" title="${item.titulo}">${item.titulo}</div>
