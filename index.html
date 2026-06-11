@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GatonPlay - Catálogo Global</title>
     <style>
-        /* Estilos Base - Modo Oscuro Premium */
+        /* ==========================================
+           🎨 ESTILOS BASE (MODO OSCURO PREMIUM)
+           ========================================== */
         * {
             margin: 0;
             padding: 0;
@@ -14,8 +16,8 @@
         }
 
         body {
-            background-color: #141414;
-            color: #ffffff;
+            background-color: #141414; /* Color de fondo de la web */
+            color: #ffffff;            /* Color del texto general */
             padding-bottom: 50px;
         }
 
@@ -24,7 +26,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 2px solid #e50914;
+            border-bottom: 2px solid #e50914; /* Línea roja estilo Netflix */
         }
 
         .navbar {
@@ -73,7 +75,7 @@
         }
 
         .catalog-tabs button:hover, .catalog-tabs button.active {
-            background-color: #e50914;
+            background-color: #e50914; /* Color del botón activo */
             border-color: #e50914;
             color: #ffffff;
         }
@@ -119,18 +121,19 @@
             width: 220px;
         }
 
-        /* Grid de Tarjetas */
+        /* ==========================================
+           🎴 GRID Y EFECTO DE GIRO 3D (FLIP CARD)
+           ========================================== */
         .series-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 25px;
         }
 
-        /* === EFECTO DE GIRO 3D (FLIP CARD) === */
         .card-container {
             background-color: transparent;
             height: 380px;
-            perspective: 1000px; /* Crea el espacio 3D */
+            perspective: 1000px; /* Crea la perspectiva 3D */
             cursor: pointer;
         }
 
@@ -143,7 +146,7 @@
             transform-style: preserve-3d;
         }
 
-        /* Cuando pasas el mouse (o tocas en móvil), gira */
+        /* Gira la tarjeta al pasar el mouse (PC) o añadir la clase .flipped (Móvil) */
         .card-container:hover .card-inner,
         .card-container.flipped .card-inner {
             transform: rotateY(180deg);
@@ -162,9 +165,9 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        /* Lado de Enfrente (Portada) */
+        /* 🔹 Cara Frontal (Portada) */
         .card-front {
-            background-color: #1f1f1f;
+            background-color: #1f1f1f; /* Color de fondo de la tarjeta */
             color: white;
         }
 
@@ -185,7 +188,7 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background-color: #f5c518;
+            background-color: #f5c518; /* Amarillo IMDb */
             color: #000000;
             padding: 3px 6px;
             font-size: 11px;
@@ -224,20 +227,22 @@
             overflow: hidden;
             text-overflow: ellipsis;
             margin-bottom: 5px;
+            text-align: left;
         }
 
         .series-meta {
             font-size: 12px;
             color: #aaaaaa;
+            text-align: left;
         }
 
-        /* Lado de Atrás (Sinopsis) */
+        /* 🔸 Cara Posterior (Sinopsis y Detalles) */
         .card-back {
             background-color: #1a1a1a;
             color: #ffffff;
             transform: rotateY(180deg);
             padding: 20px;
-            border: 2px solid #e50914;
+            border: 2px solid #e50914; /* Borde rojo que resalta al girar */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -260,12 +265,11 @@
             font-size: 13px;
             line-height: 1.5;
             color: #dddddd;
-            overflow-y: auto; /* Permite scroll interno si la sinopsis es muy larga */
+            overflow-y: auto; /* Scrollbar interno si el texto es largo */
             flex-grow: 1;
             padding-right: 5px;
         }
 
-        /* Personalizar scrollbar de la sinopsis */
         .back-synopsis::-webkit-scrollbar { width: 4px; }
         .back-synopsis::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
 
@@ -280,10 +284,25 @@
         .status-message {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 60px;
+            padding: 40px;
             color: #888;
             font-size: 16px;
         }
+
+        /* Botón de contingencia local */
+        .btn-retry-local {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        #local-file-picker { display: none; }
 
         footer {
             text-align: center;
@@ -295,6 +314,7 @@
             font-size: 14px;
         }
 
+        /* 📱 RESPONSIVE (CELULARES Y TABLETS) */
         @media (max-width: 768px) {
             .navbar { flex-direction: column; }
             .catalog-tabs { width: 100%; justify-content: flex-start; }
@@ -339,6 +359,8 @@
         </div>
     </main>
 
+    <input type="file" id="local-file-picker" accept=".csv">
+
     <footer>
         <p>&copy; 2026 Catálogo de Medios Global en Vercel</p>
     </footer>
@@ -350,6 +372,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             cambiarCatalogo('series.csv');
             document.getElementById('search-input').addEventListener('input', filtrarContenido);
+            document.getElementById('local-file-picker').addEventListener('change', cargarArchivoLocal);
         });
 
         function cambiarCatalogo(nombreArchivo) {
@@ -375,16 +398,29 @@
                     procesarCSV(texto);
                 })
                 .catch(error => {
-                    container.innerHTML = `<div class="status-message" style="color: #e50914;">Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</div>`;
+                    container.innerHTML = `
+                        <div class="status-message" style="color: #e50914;">
+                            <p>Asegúrate de que el nombre del archivo en GitHub sea exactamente "${nombreArchivo}" en minúsculas.</p>
+                            <label for="local-file-picker" class="btn-retry-local">O cargar "${nombreArchivo}" manualmente desde tu PC</label>
+                        </div>`;
                     console.error(error);
                 });
         }
 
+        function cargarArchivoLocal(evt) {
+            const archivo = evt.target.files[0];
+            if (!archivo) return;
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                procesarCSV(e.target.result);
+            };
+            lector.readAsText(archivo, 'UTF-8');
+        }
+
         function procesarCSV(texto) {
-            // Dividir líneas, controlando variaciones del archivo animados.csv
             let lineas = [];
+            // Tratamiento especial para el archivo tabulado de animados.csv
             if (archivoActual === 'animados.csv' && texto.includes('\t')) {
-                // Limpieza especial para el formato tabulado de animados.csv
                 let textoLimpio = texto.replace(/^"|";;$/g, '').replace(/"\s*;\s*;\s*"/g, '\n');
                 lineas = textoLimpio.split('\n');
             } else {
@@ -393,7 +429,6 @@
 
             if (lineas.length < 2) return;
 
-            // Detectar cabecera y separador
             let separador = ';';
             if (archivoActual === 'animados.csv' && lineas[0].includes('\t')) {
                 separador = '\t';
@@ -417,9 +452,10 @@
                     obj[cabecera] = columnas[index] ? columnas[index].trim() : '';
                 });
 
+                // Extracción unificada y mapeo flexible de variables
                 const tituloFinal = obj.titulo_encontrado || obj.titulo || obj.titulo_original || "Sin título";
                 const anioFinal = obj.anio || "N/A";
-                const宣imagenFinal = obj.link_imagen || obj.poster_url || "";
+                const imagenFinal = obj.link_imagen || obj.poster_url || ""; 
                 const scoreFinal = obj.puntuacion_imdb || obj.puntuacion || obj.puntuacion_tmdb || obj.puntuacion_usuario || "N/A";
                 const tempFinal = obj.temporadas || "1";
                 const capFinal = obj.capitulos || obj.episodios || "0";
@@ -429,7 +465,7 @@
                 datosActuales.push({
                     titulo: tituloFinal,
                     anio: anioFinal,
-                    imagen:宣imagenFinal,
+                    imagen: imagenFinal, 
                     imdb: scoreFinal,
                     temporadas: tempFinal,
                     capitulos: capFinal,
@@ -469,11 +505,10 @@
 
                 const ratingBadge = (item.imdb !== 'N/A' && item.imdb !== '0.0' && item.imdb !== '0') ? `<span class="badge-imdb">⭐ ${item.imdb}</span>` : '';
 
-                // Contenedor de la tarjeta 3D
                 const cardContainer = document.createElement('div');
                 cardContainer.className = 'card-container';
                 
-                // Permitir click para dispositivos móviles (giro táctil)
+                // Evento táctil para teléfonos móviles
                 cardContainer.addEventListener('click', () => {
                     cardContainer.classList.toggle('flipped');
                 });
@@ -491,7 +526,6 @@
                                 <div class="series-meta">${item.anio}</div>
                             </div>
                         </div>
-                        
                         <div class="card-back">
                             <div class="back-title">${item.titulo}</div>
                             <div class="back-synopsis">${item.sinopsis}</div>
